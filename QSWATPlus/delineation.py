@@ -46,6 +46,7 @@ from .QSWATUtils import QSWATUtils, fileWriter, FileTypes, ListFuns, MapFuns  # 
 from .QSWATTopology import QSWATTopology  # type: ignore
 from .globals import GlobalVars  # type: ignore #  @UnusedImport 
 from .landscape import Landscape  # type: ignore
+#from .save_attributes import save_attributes  # type: ignore
 from .outletsdialog import OutletsDialog  # type: ignore
 from .selectsubs import SelectSubbasins  # type: ignore
 from .parameters import Parameters  # type: ignore
@@ -199,7 +200,7 @@ class Delineation(QObject):
         self._dlg.landscapeButton.clicked.connect(self.runLandscape)
 
         # Draw shape button, change landscapeButton to DrawShapeButton #006#
-        self._dlg.DrawShapeButton.clicked.connect(self.runLandscape)
+        self._dlg.DrawShapeButton.clicked.connect(self.runDrawShape)
 
         self._dlg.selectSubButton.clicked.connect(self.selectMergeSubbasins)
         self._dlg.mergeButton.clicked.connect(self.mergeSubbasins)
@@ -4514,7 +4515,13 @@ If you want to start again from scratch, reload the lakes shapefile."""
             channelsLayer.setItemVisibilityChecked(False)
         self.progress('')
         return drainStreamsFile
-    
+
+    # runDrawShape opens a dialog for darwing polygons. #007#
+    def runDrawShape(self,flag) -> None:
+        pass;
+
+
+
     def runLandscape(self) -> None:
         """Run the landscape dialog and create files as requested."""
         if self._gv.existingWshed:
