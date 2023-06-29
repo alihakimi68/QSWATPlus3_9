@@ -1,0 +1,21 @@
+
+qpython:S116R"ZRename this field "ridgeThresholdArea" to match the regular expression ^[_a-z][_a-z0-9]*$.(ìÆ­
+spython:S116j"WRename this field "branchThreshold" to match the regular expression ^[_a-z][_a-z0-9]*$.(©×³×ÿÿÿÿÿ
+ppython:S116^"TRename this field "areaUnitsBox" to match the regular expression ^[_a-z][_a-z0-9]*$.(¡ïäüÿÿÿÿ
+wpython:S116‚"ZRename this field "slopePositionLabel" to match the regular expression ^[_a-z][_a-z0-9]*$.(¯ÅÏúÿÿÿÿ
+opython:S116,"XRename this field "bufferMultiplier" to match the regular expression ^[_a-z][_a-z0-9]*$.(óá€º
+qpython:S116…"TRename this field "createButton" to match the regular expression ^[_a-z][_a-z0-9]*$.(âáùÿÿÿÿ
+xpython:S116w"\Rename this field "slopePositionSpinBox" to match the regular expression ^[_a-z][_a-z0-9]*$.(÷‹óøÿÿÿÿ
+vpython:S116"ZRename this field "hillslopesCheckBox" to match the regular expression ^[_a-z][_a-z0-9]*$.(æáÓ’üÿÿÿÿ
+hpython:S116e"RRename this field "gridLayout" to match the regular expression ^[_a-z][_a-z0-9]*$.(µŸb
+ppython:S116<"TRename this field "gridLayout_3" to match the regular expression ^[_a-z][_a-z0-9]*$.(¶áì”øÿÿÿÿ
+kpython:S116"TRename this field "gridLayout_2" to match the regular expression ^[_a-z][_a-z0-9]*$.(ãğ«ª
+mpython:S116!"QRename this field "methodTab" to match the regular expression ^[_a-z][_a-z0-9]*$.(ëÛ¡®øÿÿÿÿ
+vpython:S116"ZRename this field "floodplainCheckBox" to match the regular expression ^[_a-z][_a-z0-9]*$.(—ƒÏşÿÿÿÿ
+ppython:S116'"TRename this field "gridLayout_4" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÛáŸğıÿÿÿÿ
+jpython:S116ˆ"RRename this field "doneButton" to match the regular expression ^[_a-z][_a-z0-9]*$.(¿úÓ«
+rpython:S116E"[Rename this field "ridgeThresholdCells" to match the regular expression ^[_a-z][_a-z0-9]*$.(É¶±
+python:S101"lRename class "Ui_drawshapedialog" to match the regular expression ^_?([A-Z_][a-zA-Z0-9]*|[a-z_][a-z0-9_]*)$.(øáÌ†øÿÿÿÿ8õ˜¼·1
+rpython:S117-"[Rename this local variable "sizePolicy" to match the regular expression ^[_a-z][a-z0-9_]*$.(Á‰
+bpython:S100"KRename method "setupUi" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÂùÀò
+npython:S100"QRename method "retranslateUi" to match the regular expression ^[a-z_][a-z0-9_]*$.(šŠ¸ıÿÿÿÿ

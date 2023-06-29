@@ -1,0 +1,59 @@
+
+epython:S1192ß"GDefine a constant instead of duplicating this literal 'Step 2' 3 times.(Ğ‘Éœùÿÿÿÿ
+rpython:S1192”"YDefine a constant instead of duplicating this literal '/QSWATPlus/LastInputPath' 3 times.(Å–™Ë
+_python:S2208("GImport only needed names or import the module and then use its members.(ê¸öö
+_python:S2208*"GImport only needed names or import the module and then use its members.(”
+Tpython:S5754)"<Specify an exception class to catch or reraise the exception(ˆÊÉ·
+Tpython:S57540"<Specify an exception class to catch or reraise the exception(ˆÊÉ·
+wpython:S117m"[Rename this local variable "localePath" to match the regular expression ^[_a-z][a-z0-9_]*$.( Ã¡âûÿÿÿÿ
+vpython:S117j"ZRename this local variable "localeStr" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ã¯«¡ıÿÿÿÿ
+vpython:S117|"ZRename this local variable "pointSize" to match the regular expression ^[_a-z][a-z0-9_]*$.(Öû¯üÿÿÿÿ
+6python:S125z"Remove this commented out code.(µ´›²
+jpython:S117ì"RRename this parameter "ptSize" to match the regular expression ^[_a-z][a-z0-9_]*$.(¥¯à›
+wpython:S117™"ZRename this local variable "parentDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ä†şçûÿÿÿÿ
+ppython:S117¡"XRename this local variable "projDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(ò´É³
+qpython:S117­"YRename this local variable "projFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(°°ƒ»
+qpython:S117›"YRename this local variable "projName" to match the regular expression ^[_a-z][a-z0-9_]*$.(Üß„
+ppython:S117Æ"SRename this parameter "isBatch" to match the regular expression ^[_a-z][a-z0-9_]*$.(£òÿâşÿÿÿÿ
+npython:S117Æ"QRename this parameter "isHUC" to match the regular expression ^[_a-z][a-z0-9_]*$.(£òÿâşÿÿÿÿ
+python:S117Î"bRename this local variable "isHUCFromProjfile" to match the regular expression ^[_a-z][a-z0-9_]*$.(â¡•üÿÿÿÿ
+ppython:S117Æ"SRename this parameter "logFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(£òÿâşÿÿÿÿ
+tpython:S117ª"\Rename this local variable "basinReport" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ãºå§
+spython:S117®"[Rename this local variable "hrusReport" to match the regular expression ^[_a-z][a-z0-9_]*$.(£Éí¿
+tpython:S117¥"\Rename this local variable "makeVisible" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ğ¤”
+spython:S117¦"[Rename this local variable "topoReport" to match the regular expression ^[_a-z][a-z0-9_]*$.(ªØ³”
+vpython:S117À"YRename this local variable "ad8Layer" to match the regular expression ^[_a-z][a-z0-9_]*$.(ªš„Èúÿÿÿÿ
+spython:S117Å"[Rename this local variable "basinIndex" to match the regular expression ^[_a-z][a-z0-9_]*$.(Á«Õô
+vpython:S117Ú"YRename this local variable "burnFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(•ƒ¬îûÿÿÿÿ
+zpython:S117¯"bRename this local variable "chBasinNoLakeFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(´ˆÉ´
+wpython:S117¾"ZRename this local variable "chanLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(º¾íûÿÿÿÿ
+tpython:S117©"\Rename this local variable "channelFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ïËïĞ
+upython:S117®"]Rename this local variable "channelLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(‹Ş Ç
+upython:S117ò"XRename this local variable "demFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ê­”ªúÿÿÿÿ
+ppython:S117Ô"XRename this local variable "demInfo" to match the regular expression ^[_a-z][a-z0-9_]*$.(­öß
+vpython:S117÷"YRename this local variable "demLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÖÅ×ùÿÿÿÿ
+upython:S117€"XRename this local variable "demTime" to match the regular expression ^[_a-z][a-z0-9_]*$.(¯ßÈËúÿÿÿÿ
+ppython:S117ø"XRename this local variable "felInfo" to match the regular expression ^[_a-z][a-z0-9_]*$.(î†ß³
+upython:S117"XRename this local variable "felTime" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÓÁÅ’ûÿÿÿÿ
+|python:S117ª"_Rename this local variable "gridLakesAdded" to match the regular expression ^[_a-z][a-z0-9_]*$.(³¾¶Çşÿÿÿÿ
+qpython:S117£"YRename this local variable "lakeFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(†³óÏ
+wpython:S117¢"ZRename this local variable "lakeLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(È±‘îşÿÿÿÿ
+}python:S117³"`Rename this local variable "lakePointsAdded" to match the regular expression ^[_a-z][a-z0-9_]*$.(ùëçšşÿÿÿÿ
+spython:S117†"[Rename this local variable "outletFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(É’÷ß
+tpython:S117‰"\Rename this local variable "outletLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(´¹ä
+rpython:S117º"ZRename this local variable "playaFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(†€Æ¿
+qpython:S117™"YRename this local variable "snapFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(òüµÇ
+rpython:S117½"ZRename this local variable "snapLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(åÉ„¡
+|python:S117ì"_Rename this local variable "streamDrainage" to match the regular expression ^[_a-z][a-z0-9_]*$.(“»é¾ùÿÿÿÿ
+xpython:S117•"[Rename this local variable "streamFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(‰‰çüÿÿÿÿ
+tpython:S117œ"\Rename this local variable "streamLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(¯Ø¸±
+{python:S117µ"^Rename this local variable "subbasinsFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ŒÇô©ÿÿÿÿÿ
+{python:S117º"^Rename this local variable "subbasinsInfo" to match the regular expression ^[_a-z][a-z0-9_]*$.(ä„í¢ıÿÿÿÿ
+vpython:S117¼"_Rename this local variable "subbasinsLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(¨ç
+vpython:S117»"^Rename this local variable "subbasinsTime" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÚ±¸
+€python:S117Ø"cRename this local variable "treeSubbasinsLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(‘¯ã–ıÿÿÿÿ
+ypython:S117"aRename this local variable "valleyDepthsFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ô…é‰
+wpython:S117Ç"ZRename this local variable "wshedFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÙˆÖñüÿÿÿÿ
+spython:S117Í"[Rename this local variable "wshedLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(éĞÇ‚
+mpython:S3776Ş"URefactor this function to reduce its Cognitive Complexity from 135 to the 15 allowed.(‰ «,
+bpython:S3358ÿ"IExtract this nested conditional expression into an independent statement.(ßşÙ¦

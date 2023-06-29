@@ -1,0 +1,157 @@
+
+tpython:S11926"WDefine a constant instead of duplicating this literal '/QSWATPlus/SWATPlusDir' 4 times.(‚Ÿ™Üıÿÿÿÿ
+;python:S125"Remove this commented out code.(Î¸×‰üÿÿÿÿ
+;python:S125"Remove this commented out code.(Œíıÿşÿÿÿÿ
+rpython:S116®"URename this field "verticalUnits" to match the regular expression ^[_a-z][_a-z0-9]*$.(¢¾¹¸øÿÿÿÿ
+npython:S116·"QRename this field "wshedFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ó™Ÿºıÿÿÿÿ
+spython:S116Ã"VRename this field "slopeBandsFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(Š½õõûÿÿÿÿ
+rpython:S116U"VRename this field "QGISSubVersion" to match the regular expression ^[_a-z][_a-z0-9]*$.(Â¨©ÿÿÿÿÿ
+upython:S116š"XRename this field "channelBasinFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(¦Ã€àüÿÿÿÿ
+~python:S116t"[Rename this field "drawshapeGroupIndex" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ï§ˆÁıÿÿÿÿ8õˆÆ·1
+qpython:S116Š"TRename this field "useLeftRight" to match the regular expression ^[_a-z][_a-z0-9]*$.(ııÊßıÿÿÿÿ
+opython:S116‹"RRename this field "rastersDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(Îœæşşÿÿÿÿ
+upython:S116q"YRename this field "landuseGroupIndex" to match the regular expression ^[_a-z][_a-z0-9]*$.(ôöõıÿÿÿÿ
+lpython:S116„"URename this field "useLandscapes" to match the regular expression ^[_a-z][_a-z0-9]*$.(ºõ4
+lpython:S116š"TRename this field "fullLSUsFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(â©óâ
+kpython:S116ú"NRename this field "demDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(ê“Çûÿÿÿÿ
+rpython:S116µ"URename this field "parametersPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(üİÃ¢øÿÿÿÿ
+ppython:S116Å"SRename this field "landuseFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(—±Áƒıÿÿÿÿ
+hpython:S116Ç"PRename this field "soilFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(²ú‡û
+mpython:S116"PRename this field "burnFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ç÷­Úÿÿÿÿÿ
+rpython:S116I"VRename this field "dbProjTemplate" to match the regular expression ^[_a-z][_a-z0-9]*$.(¼ù±»øÿÿÿÿ
+lpython:S116‰"ORename this field "textDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(µŸåáşÿÿÿÿ
+mpython:S116Â"PRename this field "aboutPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(ŒØš×øÿÿÿÿ
+jpython:S116”"MRename this field "pFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(üòí±ûÿÿÿÿ
+opython:S116Ï"RRename this field "xBlockSize" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ü¸‚ıúÿÿÿÿ
+mpython:S116€"URename this field "existingWshed" to match the regular expression ^[_a-z][_a-z0-9]*$.(—çÎí
+rpython:S116¾"URename this field "selectSubsPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(»îÉÿÿÿÿÿ
+ipython:S116¿"QRename this field "slopeFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ù°›Ÿ
+mpython:S116“"PRename this field "plotsDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(Êí¸šşÿÿÿÿ
+wpython:S116Ö"_Rename this field "vectorFileWriterOptions" to match the regular expression ^[_a-z][_a-z0-9]*$.(ˆâ£
+ipython:S116"QRename this field "shapesDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(¾¿ È
+rpython:S116ë"ZRename this field "elevBandsThreshold" to match the regular expression ^[_a-z][_a-z0-9]*$.(•‘¦è
+ppython:S116œ"SRename this field "actLSUsFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ôØêûÿÿÿÿÿ
+mpython:S116ô"PRename this field "projName" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÿ„éûÿÿÿÿ
+fpython:S116"ORename this field "felFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÜÂr
+opython:S116Ñ"RRename this field "yBlockSize" to match the regular expression ^[_a-z][_a-z0-9]*$.(ãşÅ„úÿÿÿÿ
+lpython:S116×"TRename this field "distChNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(çğ£“
+hpython:S116¨"PRename this field "snapFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÔèÉâ
+lpython:S116Õ"TRename this field "distStNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(­•ˆ
+ppython:S116Ù"SRename this field "slopeNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(ä÷ì«úÿÿÿÿ
+ppython:S116 "SRename this field "actHRUsFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(¯î¢©şÿÿÿÿ
+mpython:S116á"PRename this field "cellArea" to match the regular expression ^[_a-z][_a-z0-9]*$.(ß‰ğìıÿÿÿÿ
+ipython:S116Ë"QRename this field "playaFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(«¨í
+lpython:S116í"TRename this field "numElevBands" to match the regular expression ^[_a-z][_a-z0-9]*$.(õñÕˆ
+lpython:S116"TRename this field "scenariosDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(í‹Â„
+gpython:S116³"ORename this field "hrusPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(§±ÿ‡
+upython:S116¤"XRename this field "valleyDepthsFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ûÜ·×ÿÿÿÿÿ
+gpython:S116¢"ORename this field "isBatch" to match the regular expression ^[_a-z][_a-z0-9]*$.(˜õñÉ
+opython:S116‘"RRename this field "resultsDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(¤½èÿÿÿÿÿ
+gpython:S116ö"ORename this field "projDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(âÿì¨
+mpython:S116å"PRename this field "gridSize" to match the regular expression ^[_a-z][_a-z0-9]*$.(öÔ†²şÿÿÿÿ
+ppython:S116ß"SRename this field "floodNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ô©Ù˜úÿÿÿÿ
+qpython:S116À"TRename this field "selectResPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ú¨áÁşÿÿÿÿ
+xpython:S116º"TRename this field "drawshapePos" to match the regular expression ^[_a-z][_a-z0-9]*$.(ŸÕ¡‚úÿÿÿÿ8’ÄÇ·1
+npython:S116˜"QRename this field "basinFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(××™Üøÿÿÿÿ
+hpython:S116Á"PRename this field "lakeFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(™À™í
+fpython:S116•"NRename this field "pngDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(±ƒÃÜ
+wpython:S116~"[Rename this field "animationGroupIndex" to match the regular expression ^[_a-z][_a-z0-9]*$.(«–À–øÿÿÿÿ
+lpython:S116Œ"ORename this field "demFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ã¾µäüÿÿÿÿ
+spython:S116o"WRename this field "slopeGroupIndex" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ò‚ª”üÿÿÿÿ
+jpython:S116B"SRename this field "SWATPlusDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(öÖèù
+jpython:S116Ì"RRename this field "outletsPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(ıÑ‹ù
+ipython:S116É"QRename this field "floodFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(»Ò¿ù
+gpython:S116¦"ORename this field "logFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(¿°¢ñ
+xpython:S116Î"[Rename this field "selectOutletFilePos" to match the regular expression ^[_a-z][_a-z0-9]*$.(€í‘Àøÿÿÿÿ
+tpython:S116Ğ"WRename this field "selectOutletPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(™È–Şÿÿÿÿÿ
+mpython:S116Æ"PRename this field "splitPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(¸ ¨°şÿÿÿÿ
+opython:S116µ"WRename this field "subsNoLakesFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(”¶İ
+ppython:S116Ó"SRename this field "basinNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(«Û¾ùÿÿÿÿ
+spython:S116ƒ"TRename this field "drawshapeDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(ËÖ¶¸8ÖÕŒ·1
+lpython:S116"TRename this field "fullHRUsFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(§ö½Ã
+hpython:S116M"QRename this field "TauDEMDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(µö¿û
+ppython:S116|"YRename this field "resultsGroupIndex" to match the regular expression ^[_a-z][_a-z0-9]*$.(æëŞÓ
+npython:S116¬"VRename this field "verticalFactor" to match the regular expression ^[_a-z][_a-z0-9]*$.(¨¯»¥
+vpython:S116Ä"YRename this field "elevationBandsPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(¸Ú…«şÿÿÿÿ
+rpython:S116’"URename this field "burnedDemFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(È®âøÿÿÿÿ
+mpython:S116‡"PRename this field "floodDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(¿ê¹ãÿÿÿÿÿ
+jpython:S116»"RRename this field "distStFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(„öŒ¥
+lpython:S116K"URename this field "dbRefTemplate" to match the regular expression ^[_a-z][_a-z0-9]*$.(§çş¨
+gpython:S116ş"ORename this field "soilDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(“Ü¡Õ
+rpython:S116x"VRename this field "soilGroupIndex" to match the regular expression ^[_a-z][_a-z0-9]*$.(©Çîìúÿÿÿÿ
+epython:S116G"NRename this field "dbPath" to match the regular expression ^[_a-z][_a-z0-9]*$.(éÂÄ“
+mpython:S116ß"URename this field "fromArcChoice" to match the regular expression ^[_a-z][_a-z0-9]*$.(şÔÊ
+ypython:S116ã"\Rename this field "channelThresholdArea" to match the regular expression ^[_a-z][_a-z0-9]*$.(Éƒûïüÿÿÿÿ
+gpython:S116¹"ORename this field "hd8File" to match the regular expression ^[_a-z][_a-z0-9]*$.(ºãÃû
+ipython:S116Û"RRename this field "cropNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(±Ç¦
+spython:S116Õ"VRename this field "exemptLanduses" to match the regular expression ^[_a-z][_a-z0-9]*$.(ññÌüÿÿÿÿ
+vpython:S116œ"YRename this field "chBasinNoLakeFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ƒ¾®ûÿÿÿÿ
+lpython:S116±"TRename this field "delineatePos" to match the regular expression ^[_a-z][_a-z0-9]*$.(ØÙµ¼
+npython:S116ª"WRename this field "extraOutletFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ëÿ
+kpython:S116È"SRename this field "selectLuPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(—Ñ•œ
+mpython:S116³"URename this field "subbasinsFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÉÒ´§
+upython:S116ª"XRename this field "horizontalFactor" to match the regular expression ^[_a-z][_a-z0-9]*$.(‘·×şÿÿÿÿ
+qpython:S116€"TRename this field "landscapeDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ëµ©Àüÿÿÿÿ
+jpython:S116¬"RRename this field "streamFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÿ½£¶
+mpython:S116Ö"URename this field "splitLanduses" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÒÏÂ‡
+tpython:S116Í"WRename this field "elevationNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(²Ó«éøÿÿÿÿ
+gpython:S116–"ORename this field "ad8File" to match the regular expression ^[_a-z][_a-z0-9]*$.(³Ïõ
+npython:S116"VRename this field "srcChannelFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(×ÿ÷õ
+ipython:S116ü"RRename this field "landuseDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(“›ä
+jpython:S116¤"MRename this field "isHUC" to match the regular expression ^[_a-z][_a-z0-9]*$.(½ŞÍøıÿÿÿÿ
+opython:S116½"RRename this field "distChFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ßµìùÿÿÿÿ
+lpython:S116·"TRename this field "landscapePos" to match the regular expression ^[_a-z][_a-z0-9]*$.(‚¿»¤
+qpython:S116Ò"TRename this field "visualisePos" to match the regular expression ^[_a-z][_a-z0-9]*$.(»ŞÙ»øÿÿÿÿ
+jpython:S116İ"RRename this field "soilNoData" to match the regular expression ^[_a-z][_a-z0-9]*$.(°ì’×
+tpython:S116¯"WRename this field "delinStreamFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ëó×³ûÿÿÿÿ
+qpython:S116‚"TRename this field "useGridModel" to match the regular expression ^[_a-z][_a-z0-9]*$.(ª†ûúÿÿÿÿ
+rpython:S116z"[Rename this field "watershedGroupIndex" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÉÎÕ
+qpython:S116—"TRename this field "animationDir" to match the regular expression ^[_a-z][_a-z0-9]*$.(Š»’‰üÿÿÿÿ
+jpython:S116O"SRename this field "mpiexecPath" to match the regular expression ^[_a-z][_a-z0-9]*$.(æÇ°ñ
+npython:S116Ê"QRename this field "exemptPos" to match the regular expression ^[_a-z][_a-z0-9]*$.(”Ê¤¿şÿÿÿÿ
+jpython:S116¦"RRename this field "outletFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(Ìè©
+ppython:S116±"SRename this field "channelFile" to match the regular expression ^[_a-z][_a-z0-9]*$.(ºÆ–šùÿÿÿÿ
+spython:S1177"\Rename this local variable "SWATPlusDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(Œàóì
+jpython:S1173"SRename this parameter "isBatch" to match the regular expression ^[_a-z][a-z0-9_]*$.(Úí·û
+hpython:S1173"QRename this parameter "isHUC" to match the regular expression ^[_a-z][a-z0-9_]*$.(Úí·û
+jpython:S1173"SRename this parameter "logFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(Úí·û
+qpython:S117ğ"YRename this local variable "projFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(óÕµù
+qpython:S117ñ"YRename this local variable "projPath" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÀÇ£«
+spython:S117†"[Rename this local variable "defaultDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(µÇÍ‘
+spython:S117è"[Rename this local variable "rastersDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(‹§©û
+ypython:S117‰"\Rename this local variable "txtInOutDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(›æÅİşÿÿÿÿ
+upython:S117å"]Rename this local variable "watershedDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(èå¼Ó
+ppython:S100á"XRename method "createSubDirectories" to match the regular expression ^[a-z_][a-z0-9_]*$.(†ğÖ„
+mpython:S3776á"TRefactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.(†ğÖ„
+mpython:S100Ÿ"URename method "setVerticalFactor" to match the regular expression ^[a-z_][a-z0-9_]*$.(ü°Åç
+mpython:S117®"URename this parameter "landuseId" to match the regular expression ^[_a-z][a-z0-9_]*$.(ñÅ¢â
+dpython:S100®"LRename method "isExempt" to match the regular expression ^[a-z_][a-z0-9_]*$.(ñÅ¢â
+qpython:S117Â"YRename this local variable "clearSql" to match the regular expression ^[_a-z][a-z0-9_]*$.(Òìû½
+tpython:S117¼"\Rename this local variable "exemptTable" to match the regular expression ^[_a-z][a-z0-9_]*$.(È¨Ú
+spython:S117½"[Rename this local variable "splitTable" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ò·äı
+ppython:S100º"SRename method "saveExemptSplit" to match the regular expression ^[a-z_][a-z0-9_]*$.(™å—îÿÿÿÿÿ
+tpython:S117×"\Rename this local variable "exemptTable" to match the regular expression ^[_a-z][a-z0-9_]*$.(È¨Ú
+spython:S117Ø"[Rename this local variable "splitTable" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ò·äı
+jpython:S100Ò"RRename method "getExemptSplit" to match the regular expression ^[a-z_][a-z0-9_]*$.(å¡ğı
+qpython:S100é"YRename method "populateSplitLanduses" to match the regular expression ^[a-z_][a-z0-9_]*$.(Ì‡’ª
+mpython:S117î"URename this parameter "doneDelin" to match the regular expression ^[_a-z][a-z0-9_]*$.(˜÷Á
+upython:S117…"]Rename this local variable "doneDelinNum" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ö¤°Æ
+lpython:S117î"TRename this parameter "doneHRUs" to match the regular expression ^[_a-z][a-z0-9_]*$.(˜÷Á
+tpython:S117‰"\Rename this local variable "doneHRUsNum" to match the regular expression ^[_a-z][a-z0-9_]*$.(õéÌê
+ppython:S117€"XRename this local variable "gisType" to match the regular expression ^[_a-z][a-z0-9_]*$.(¿ÿÙç
+xpython:S117"[Rename this local variable "gisVersion" to match the regular expression ^[_a-z][a-z0-9_]*$.(ş‘óËûÿÿÿÿ
+rpython:S117ü"ZRename this local variable "projectDb" to match the regular expression ^[_a-z][a-z0-9_]*$.(ì¼ÓÚ
+~python:S117û"aRename this local variable "projectDirectory" to match the regular expression ^[_a-z][a-z0-9_]*$.(˜ÇÇ™ÿÿÿÿÿ
+tpython:S117ú"\Rename this local variable "projectName" to match the regular expression ^[_a-z][a-z0-9_]*$.(ñšÍ€
+tpython:S117ı"\Rename this local variable "referenceDb" to match the regular expression ^[_a-z][a-z0-9_]*$.(Áî¶²
+|python:S117ÿ"_Rename this local variable "weatherDataDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(šİ¦‹üÿÿÿÿ
+npython:S100î"VRename method "writeProjectConfig" to match the regular expression ^[a-z_][a-z0-9_]*$.(˜÷Á
+mpython:S3776î"TRefactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.(˜÷Á
+lpython:S100¡"ORename method "isDelinDone" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÇÿæËûÿÿÿÿ
+kpython:S100°"NRename method "isHRUsDone" to match the regular expression ^[a-z_][a-z0-9_]*$.(Ş¹‘…ùÿÿÿÿ
+tpython:S117Æ"\Rename this local variable "SWATPlusDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(ˆëÉ”
+xpython:S117Á"[Rename this local variable "editorDir1" to match the regular expression ^[_a-z][a-z0-9_]*$.(öÉ°îüÿÿÿÿ
+xpython:S117Ç"[Rename this local variable "editorDir2" to match the regular expression ^[_a-z][a-z0-9_]*$.(ëë¹èùÿÿÿÿ
+npython:S100¿"VRename method "findSWATPlusEditor" to match the regular expression ^[a-z_][a-z0-9_]*$.(½¨ëÎ
+qpython:S100î"TRename method "closeOpenRasters" to match the regular expression ^[a-z_][a-z0-9_]*$.(ËŒ»„ùÿÿÿÿ
+qpython:S100÷"TRename method "clearOpenRasters" to match the regular expression ^[a-z_][a-z0-9_]*$.(Ë“úåøÿÿÿÿ

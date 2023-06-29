@@ -1,0 +1,96 @@
+
+6python:S125"Remove this commented out code.(Çî—”
+6python:S125#"Remove this commented out code.(ã½ Ö
+npython:S117<"XRename this parameter "numProcesses" to match the regular expression ^[_a-z][a-z0-9_]*$.(ëÛø
+npython:S117<"XRename this parameter "taudemOutput" to match the regular expression ^[_a-z][a-z0-9_]*$.(ëÛø
+;python:S125}"Remove this commented out code.(´èñûÿÿÿÿ
+upython:S117“"XRename this parameter "branchThresh" to match the regular expression ^[_a-z][a-z0-9_]*$.(á€®òûÿÿÿÿ
+vpython:S117“"YRename this parameter "channelThresh" to match the regular expression ^[_a-z][a-z0-9_]*$.(á€®òûÿÿÿÿ
+tpython:S117“"WRename this parameter "clipperFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(á€®òûÿÿÿÿ
+ppython:S117“"SRename this parameter "mustRun" to match the regular expression ^[_a-z][a-z0-9_]*$.(á€®òûÿÿÿÿ
+spython:S117“"VRename this parameter "numCellsSt" to match the regular expression ^[_a-z][a-z0-9_]*$.(á€®òûÿÿÿÿ
+ppython:S117«"XRename this local variable "areaSqM" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ý“Ö
+qpython:S117¾"YRename this local variable "numCells" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÄÂ†
+vpython:S117Ò"YRename this local variable "numCells" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÂÀƒïøÿÿÿÿ
+qpython:S117è"YRename this local variable "clipFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(Äž·
+opython:S117Ý"WRename this parameter "clipperFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(¬¿¯ò
+jpython:S117Ý"RRename this parameter "inFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(¬¿¯ò
+wpython:S117æ"ZRename this local variable "isNewFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(•ÿ”ôÿÿÿÿÿ
+qpython:S117ˆ"YRename this parameter "channelThresh" to match the regular expression ^[_a-z][a-z0-9_]*$.(†¶Œž
+opython:S117ˆ"WRename this parameter "clipperFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(†¶Œž
+tpython:S117›"WRename this local variable "d8Flow" to match the regular expression ^[_a-z][a-z0-9_]*$.(ýÉÙÚüÿÿÿÿ
+{python:S117¯"^Rename this local variable "hillslopeFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ðÅÝÍúÿÿÿÿ
+spython:S117—"VRename this local variable "isNew" to match the regular expression ^[_a-z][a-z0-9_]*$.(ú¶¾Àÿÿÿÿÿ
+mpython:S3776ˆ"TRefactor this function to reduce its Cognitive Complexity from 36 to the 15 allowed.(†¶Œž
+opython:S117ü"XRename this local variable "ad8File" to match the regular expression ^[_a-z][a-z0-9_]*$.(Á£ž
+qpython:S117ö"YRename this parameter "channelThresh" to match the regular expression ^[_a-z][a-z0-9_]*$.(¬³£¨
+|python:S117ù"_Rename this local variable "srcChannelFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(úÞôþÿÿÿÿ
+vpython:S117"YRename this local variable "baseName" to match the regular expression ^[_a-z][a-z0-9_]*$.(þ®¶Óùÿÿÿÿ
+tpython:S117•"\Rename this local variable "channelFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(Å–‹
+vpython:S117Š"YRename this parameter "channelThresh" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ô¤Íöþÿÿÿÿ
+~python:S117”"aRename this local variable "coordChannelFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÿÿ©øûÿÿÿÿ
+wpython:S117’"_Rename this local variable "ordChannelFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(¬í¤ï
+xpython:S117‘"[Rename this local variable "shapesBase" to match the regular expression ^[_a-z][a-z0-9_]*$.(é‡Žúÿÿÿÿ
+xpython:S117“"`Rename this local variable "treeChannelFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ëðý£
+zpython:S117–"]Rename this local variable "wChannelFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(šºö úÿÿÿÿ
+lpython:S930"OAdd 1 missing arguments; 'makeSrcChannelRaster' expects 2 positional arguments.(ÁÕöËùÿÿÿÿ
+xpython:S117Ñ"[Rename this local variable "areaToSqKm" to match the regular expression ^[_a-z][a-z0-9_]*$.(÷—®²ýÿÿÿÿ
+spython:S117ç"[Rename this local variable "basinLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(·ÌÎµ
+wpython:S117Ü"_Rename this local variable "bufferGeometry" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÐÈï—
+ypython:S117ä"aRename this local variable "bufferRasterFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÛÚúÙ
+xpython:S117®"`Rename this local variable "bufferShapefile" to match the regular expression ^[_a-z][a-z0-9_]*$.(åÚ 
+‚python:S117²"eRename this local variable "bufferShapefileLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(®žÝ¹üÿÿÿÿ
+tpython:S117Û"\Rename this local variable "bufferWidth" to match the regular expression ^[_a-z][a-z0-9_]*$.(ùíå
+upython:S117È"^Rename this local variable "channelsLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(ßÀï<
+qpython:S117ö"YRename this local variable "demLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(þšÀ‹
+|python:S117Ì"_Rename this local variable "drainAreaIndex" to match the regular expression ^[_a-z][a-z0-9_]*$.(˜åÑšúÿÿÿÿ
+ypython:S117Ø"\Rename this local variable "drainAreaKm" to match the regular expression ^[_a-z][a-z0-9_]*$.(ç®÷Íúÿÿÿÿ
+spython:S117÷"[Rename this local variable "floodLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(¨ùÏý
+rpython:S117ê"URename this local variable "xMax" to match the regular expression ^[_a-z][a-z0-9_]*$.(é‡»®üÿÿÿÿ
+rpython:S117é"URename this local variable "xMin" to match the regular expression ^[_a-z][a-z0-9_]*$.(ù É¸ýÿÿÿÿ
+npython:S117í"VRename this local variable "xSize" to match the regular expression ^[_a-z][a-z0-9_]*$.(§Ð¢…
+mpython:S117ì"URename this local variable "yMax" to match the regular expression ^[_a-z][a-z0-9_]*$.(þÜö‘
+rpython:S117ë"URename this local variable "yMin" to match the regular expression ^[_a-z][a-z0-9_]*$.(ê×…ôüÿÿÿÿ
+spython:S117î"VRename this local variable "ySize" to match the regular expression ^[_a-z][a-z0-9_]*$.(Íæºàýÿÿÿÿ
+mpython:S3776¤"TRefactor this function to reduce its Cognitive Complexity from 28 to the 15 allowed.(Óãó¯
+Rpython:S1135Ø"4Complete the task associated to this "TODO" comment.(ç®÷Íúÿÿÿÿ
+tpython:S117‡"WRename this local variable "accInv" to match the regular expression ^[_a-z][a-z0-9_]*$.(˜Éáùÿÿÿÿ
+upython:S117˜"XRename this local variable "ad8File" to match the regular expression ^[_a-z][a-z0-9_]*$.(©ê™ïøÿÿÿÿ
+spython:S117‡"VRename this local variable "d8Inv" to match the regular expression ^[_a-z][a-z0-9_]*$.(˜Éáùÿÿÿÿ
+upython:S117"XRename this local variable "flowAcc" to match the regular expression ^[_a-z][a-z0-9_]*$.(âÛ´Çÿÿÿÿÿ
+npython:S117ˆ"VRename this local variable "isNew" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ø„ðš
+upython:S117‚"]Rename this local variable "ridgesResult" to match the regular expression ^[_a-z][a-z0-9_]*$.(²‰Õ¬
+qpython:S117Ž"YRename this local variable "slopeDir" to match the regular expression ^[_a-z][a-z0-9_]*$.(ëœÚ¯
+ppython:S117ü"XRename this parameter "useInversion" to match the regular expression ^[_a-z][a-z0-9_]*$.(ì³é
+lpython:S117¢"TRename this parameter "clipFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(»¥•…
+jpython:S117¢"RRename this parameter "inFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(»¥•…
+kpython:S117¢"SRename this parameter "outFile" to match the regular expression ^[_a-z][a-z0-9_]*$.(»¥•…
+upython:S117Ë"]Rename this local variable "doFloodplain" to match the regular expression ^[_a-z][a-z0-9_]*$.(´§œÎ
+zpython:S117Ê"]Rename this local variable "doHillslopes" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÚÈÀ’ùÿÿÿÿ
+rpython:S117Î"ZRename this local variable "useBuffer" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÿÃÂž
+upython:S117Ï"]Rename this local variable "useInversion" to match the regular expression ^[_a-z][a-z0-9_]*$.(§þ×¶
+rpython:S3776È"TRefactor this function to reduce its Cognitive Complexity from 23 to the 15 allowed.(’ÓÞ•ýÿÿÿÿ
+Fpython:S1940î"-Use the opposite operator ("is not") instead.(âáüß
+Kpython:S1940ô"-Use the opposite operator ("is not") instead.(”¡“Áýÿÿÿÿ
+Fpython:S1940ö"-Use the opposite operator ("is not") instead.(ææú 
+Fpython:S1940ù"-Use the opposite operator ("is not") instead.(Ñ„¥Œ
+Kpython:S1940û"-Use the opposite operator ("is not") instead.(°¬Ôÿÿÿÿÿ
+Kpython:S1940ý"-Use the opposite operator ("is not") instead.(¼‰ô’úÿÿÿÿ
+Fpython:S1940ÿ"-Use the opposite operator ("is not") instead.(ÊÕçü
+tpython:S117²"WRename this local variable "accInv" to match the regular expression ^[_a-z][a-z0-9_]*$.(¢úç¾üÿÿÿÿ
+tpython:S117º"WRename this local variable "demInv" to match the regular expression ^[_a-z][a-z0-9_]*$.(œÄçøúÿÿÿÿ
+ppython:S117´"YRename this local variable "demLayer" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ñ£A
+opython:S117±"WRename this local variable "dirInv" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÓØí™
+tpython:S117Ä"WRename this local variable "invFel" to match the regular expression ^[_a-z][a-z0-9_]*$.(¢ð ¯ûÿÿÿÿ
+opython:S117É"WRename this local variable "sd8Inv" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼ŒÇÉ
+~python:S117¹"aRename this local variable "downChannelPoint" to match the regular expression ^[_a-z][a-z0-9_]*$.(£Ùˆûÿÿÿÿ
+tpython:S117ï"WRename this local variable "isHead" to match the regular expression ^[_a-z][a-z0-9_]*$.(îÔ„Åþÿÿÿÿ
+vpython:S117"_Rename this local variable "pointsToIgnore" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÙØ·k
+mpython:S3776ç"TRefactor this function to reduce its Cognitive Complexity from 93 to the 15 allowed.(ÑüêŽ
+wpython:S117Æ"_Rename this local variable "channelsNoData" to match the regular expression ^[_a-z][a-z0-9_]*$.(‡ŠžÔ
+qpython:S117Ð"TRename this parameter "fileName" to match the regular expression ^[_a-z][a-z0-9_]*$.(’Šíýÿÿÿÿ
+npython:S117Ð"QRename this parameter "isInt" to match the regular expression ^[_a-z][a-z0-9_]*$.(’Šíýÿÿÿÿ
+qpython:S117ë"YRename this local variable "startCol" to match the regular expression ^[_a-z][a-z0-9_]*$.(ŒõÙæ
+qpython:S117ë"YRename this local variable "startRow" to match the regular expression ^[_a-z][a-z0-9_]*$.(ŒõÙæ
+tpython:S117ì"WRename this local variable "startX" to match the regular expression ^[_a-z][a-z0-9_]*$.(¥êÃ÷úÿÿÿÿ
+tpython:S117ì"WRename this local variable "startY" to match the regular expression ^[_a-z][a-z0-9_]*$.(¥êÃ÷úÿÿÿÿ
