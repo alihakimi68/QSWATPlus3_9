@@ -4522,44 +4522,46 @@ If you want to start again from scratch, reload the lakes shapefile."""
         return drainStreamsFile
 
     # runDrawShape opens a dialog for darwing polygons. #007#
-    def runDrawShape(self,flag) -> None:
+    def runDrawShape(self) -> None:
+        #008#
         """Run the landscape dialog and create files as requested."""
-        if self._gv.existingWshed:
-            # will need a d8 flow direction and a channels raster
-            (base, suffix) = os.path.splitext(self._gv.demFile)
-            # check if we have flow direction because we are running an existing ArcSWAT project
-            proj = QgsProject.instance()
-            title = proj.title()
-            arcPFile, found = proj.readEntry(title, 'delin/arcPFile', '')
-            arcPFile = proj.readPath(arcPFile)
-            root = QgsProject.instance().layerTreeRoot()
-            if found and os.path.isfile(arcPFile):
-                self._gv.pFile = arcPFile
-            else:
-                sd8File = base + 'sd8' + suffix
-                pFile = base + 'p' + suffix
-                QSWATUtils.removeLayer(sd8File, root)
-                QSWATUtils.removeLayer(pFile, root)
-                self.progress('D8FlowDir ...')
-                ok = TauDEMUtils.runD8FlowDir(self._gv.felFile, sd8File, pFile, self._dlg.numProcesses.value(),
-                                              self._dlg.taudemOutput)
-                if not ok:
-                    self.cleanUp(3)
-                    return
-                self._gv.pFile = pFile
-            channelraster = base + 'srcChannel' + suffix
-            demLayer, _ = QSWATUtils.getLayerByFilename(root.findLayers(), self._gv.demFile, FileTypes._DEM,
-                                                        self._gv, None, QSWATUtils._WATERSHED_GROUP_NAME)
-            self.streamToRaster(demLayer, self._gv.channelFile, channelraster, root)
-            self._gv.srcChannelFile = channelraster
-        self.makeDistancesToOutlets()
-        numCellsSt = int(self._dlg.numCellsSt.text())
-        channelThresh = int(self._dlg.numCellsCh.text())
-        # set branch method threshold to twice sqare root of stream threshold in square metres
-        branchThresh = int(2 * math.sqrt(numCellsSt * self._gv.topo.dx * self._gv.topo.dy))
-        clipperFile = self._gv.subbasinsFile if self.clipperFile == '' else self.clipperFile
-        self.L = drawshape(self._gv, self._dlg.taudemOutput, self._dlg.numProcesses.value(), self.progress)
-        self.L.run(numCellsSt, channelThresh, branchThresh, clipperFile, self.thresholdChanged)
+        # if self._gv.existingWshed:
+        #     # will need a d8 flow direction and a channels raster
+        #     (base, suffix) = os.path.splitext(self._gv.demFile)
+        #     # check if we have flow direction because we are running an existing ArcSWAT project
+        #     proj = QgsProject.instance()
+        #     title = proj.title()
+        #     arcPFile, found = proj.readEntry(title, 'delin/arcPFile', '')
+        #     arcPFile = proj.readPath(arcPFile)
+        #     root = QgsProject.instance().layerTreeRoot()
+        #     if found and os.path.isfile(arcPFile):
+        #         self._gv.pFile = arcPFile
+        #     else:
+        #         sd8File = base + 'sd8' + suffix
+        #         pFile = base + 'p' + suffix
+        #         QSWATUtils.removeLayer(sd8File, root)
+        #         QSWATUtils.removeLayer(pFile, root)
+        #         self.progress('D8FlowDir ...')
+        #         ok = TauDEMUtils.runD8FlowDir(self._gv.felFile, sd8File, pFile, self._dlg.numProcesses.value(),
+        #                                       self._dlg.taudemOutput)
+        #         if not ok:
+        #             self.cleanUp(3)
+        #             return
+        #         self._gv.pFile = pFile
+        #     channelraster = base + 'srcChannel' + suffix
+        #     demLayer, _ = QSWATUtils.getLayerByFilename(root.findLayers(), self._gv.demFile, FileTypes._DEM,
+        #                                                 self._gv, None, QSWATUtils._WATERSHED_GROUP_NAME)
+        #     self.streamToRaster(demLayer, self._gv.channelFile, channelraster, root)
+        #     self._gv.srcChannelFile = channelraster
+        # self.makeDistancesToOutlets()
+        # numCellsSt = int(self._dlg.numCellsSt.text())
+        # channelThresh = int(self._dlg.numCellsCh.text())
+        # # set branch method threshold to twice sqare root of stream threshold in square metres
+        # branchThresh = int(2 * math.sqrt(numCellsSt * self._gv.topo.dx * self._gv.topo.dy))
+        # clipperFile = self._gv.subbasinsFile if self.clipperFile == '' else self.clipperFile
+        # self.L = drawshape(self._gv, self._dlg.taudemOutput, self._dlg.numProcesses.value(), self.progress)
+        self.L = drawshape.run(self)
+        # self.L.run(numCellsSt, channelThresh, branchThresh, clipperFile, self.thresholdChanged)
 
 
 
