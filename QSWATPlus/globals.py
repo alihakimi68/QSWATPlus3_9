@@ -113,7 +113,7 @@ Please use the Parameters form to set its location.'''.format(SWATPlusDir), isBa
         self.landuseGroupIndex = -1
 
         ## Index of drawshape group in Layers panel #changes
-        self.drawshapeGroupIndex = -1
+        # self.drawshapeGroupIndex = -1
 
 
         ## Index of soil group in Layers panel
@@ -132,7 +132,7 @@ Please use the Parameters form to set its location.'''.format(SWATPlusDir), isBa
         self.useLandscapes = False
 
         ## flag to show if using drawshape units #changes
-        self.usedrawshape = False
+        # self.usedrawshape = False
 
         ## flag to show if dividing into left/right/headwater landscape units
         self.useLeftRight = False
@@ -256,7 +256,7 @@ Please use the Parameters form to set its location.'''.format(SWATPlusDir), isBa
         self.landscapeDir = ''
 
         ## drawshape directory #changes
-        self.drawshapeDir = ''
+        # self.drawshapeDir = ''
 
 
         ## Floodplain directory
@@ -375,10 +375,10 @@ Please use the Parameters form to set its location.'''.format(SWATPlusDir), isBa
         self.floodDir = QSWATUtils.join(self.landscapeDir, 'Flood')
 
         # changes
-        self.drawshapeDir = QSWATUtils.join(rastersDir, 'Drawshape')
-        if not os.path.exists(self.drawshapeDir):
-            os.makedirs(self.drawshapeDir)
-        self.floodDir = QSWATUtils.join(self.drawshapeDir, 'Flood')
+        # self.drawshapeDir = QSWATUtils.join(rastersDir, 'Drawshape')
+        # if not os.path.exists(self.drawshapeDir):
+        #     os.makedirs(self.drawshapeDir)
+        # self.floodDir = QSWATUtils.join(self.drawshapeDir, 'Flood')
 
 
 
