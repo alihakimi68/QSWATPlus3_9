@@ -27,22 +27,30 @@
 """
 
 
-
+from qgis.PyQt.QtCore import QObject
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtWidgets import QAction , QMessageBox
 
 # Initialize Qt resources from file resources.py
 # from .resources import *
 # Import the code for the dialog
 from .drawshapedialog import drawshapedialog
+from .qdraw import Qdraw
 import os.path
 
 
-class drawshape:
+# delet this after finished #delete#
+# def show_message():
+#     current_directory = os.path.dirname(__file__)
+#     message_box = QMessageBox()
+#     message_box.setText(current_directory)
+#     message_box.exec_()
+
+
+class drawshape(QObject):
 
     def __init__(self, iface):
-
         """Constructor.
 
         :param iface: An interface instance that will be passed to this class
@@ -50,6 +58,7 @@ class drawshape:
             application at run time.
         :type iface: QgsInterface
         """
+
         # Save reference to the QGIS interface
         self.iface = iface
         # initialize plugin directory
@@ -76,7 +85,6 @@ class drawshape:
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
-
         """Get the translation for a string using Qt translation API.
 
         We implement this ourselves since we do not inherit QObject.
@@ -91,6 +99,9 @@ class drawshape:
         return QCoreApplication.translate('drawshape', message)
 
 
+
+
+
     def add_action(
         self,
         icon_path,
@@ -102,7 +113,6 @@ class drawshape:
         status_tip=None,
         whats_this=None,
         parent=None):
-
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -167,7 +177,6 @@ class drawshape:
         return action
 
     def initGui(self):
-
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
         icon_path = ':/plugins/drawshape/icon.png'
@@ -182,7 +191,6 @@ class drawshape:
 
 
     def unload(self):
-
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginMenu(
@@ -190,21 +198,29 @@ class drawshape:
                 action)
             self.iface.removeToolBarIcon(action)
 
-
     def run(self):
-
         """Run method that performs all the real work"""
 
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
-        # if self.first_start == True: #009#
+        # if self.first_start == True:
         #     self.first_start = False
         self.dlg = drawshapedialog()
+        # self.iface = iface
+        qdraw_instance = Qdraw(self.iface)
+        self.dlg.dRectangleButton.clicked.connect(qdraw_instance.drawRect)
+
+        self.dlg.dCircleButton.clicked.connect(qdraw_instance.drawCircle)
+
+        self.dlg.dPolygonButton.clicked.connect(qdraw_instance.drawPolygon)
+        # self.dlg.dRectangleButton.clicked.connect(show_message)
 
         # show the dialog
         self.dlg.show()
+
         # Run the dialog event loop
         result = self.dlg.exec_()
+
         # See if OK was pressed
         if result:
             # Do something useful here - delete the line containing pass and
@@ -212,6 +228,24 @@ class drawshape:
             pass
 
 
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+#####################################################################################
+#####################################################################################
+#####################################################################################
 
 
 # # Import the PyQt and QGIS libraries
