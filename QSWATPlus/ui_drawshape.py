@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+# from .delineation import Delineation
 
 class Ui_drawshapedialog(object):
     def setupUi(self, drawshapedialog):
@@ -21,6 +21,22 @@ class Ui_drawshapedialog(object):
         self.button_box.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.button_box.setObjectName("button_box")
 
+        # Draw Rectangle Button
+        self.dRectangleButton = QtWidgets.QPushButton(drawshapedialog)
+        self.dRectangleButton.setGeometry(QtCore.QRect(50, 50, 111, 23))
+        self.dRectangleButton.setObjectName("dRectangleButton")
+
+        # Draw Circle Button
+        self.dCircleButton = QtWidgets.QPushButton(drawshapedialog)
+        self.dCircleButton.setGeometry(QtCore.QRect(50, 100, 111, 23))
+        self.dCircleButton.setObjectName("dCircleButton")
+
+        # Draw Polygon Button
+        self.dPolygonButton = QtWidgets.QPushButton(drawshapedialog)
+        self.dPolygonButton.setGeometry(QtCore.QRect(50, 150, 111, 23))
+        self.dPolygonButton.setObjectName("dPolygonButton")
+
+
         self.retranslateUi(drawshapedialog)
         self.button_box.accepted.connect(drawshapedialog.accept)
         self.button_box.rejected.connect(drawshapedialog.reject)
@@ -29,6 +45,10 @@ class Ui_drawshapedialog(object):
     def retranslateUi(self, drawshapedialog):
         _translate = QtCore.QCoreApplication.translate
         drawshapedialog.setWindowTitle(_translate("drawshapedialog", "Draw Shape"))
+        # Draw Rectangle Button
+        self.dRectangleButton.setText(_translate("drawshapedialog", "Draw Rectangle"))
+        self.dCircleButton.setText(_translate("drawshapedialog", "Draw Circle"))
+        self.dPolygonButton.setText(_translate("drawshapedialog", "Draw Polygon"))
 
 
 
