@@ -14,28 +14,46 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_drawshapedialog(object):
     def setupUi(self, drawshapedialog):
         drawshapedialog.setObjectName("drawshapedialog")
-        drawshapedialog.resize(400, 300)
+        drawshapedialog.resize(709, 578)
         self.button_box = QtWidgets.QDialogButtonBox(drawshapedialog)
-        self.button_box.setGeometry(QtCore.QRect(30, 240, 341, 32))
+        self.button_box.setGeometry(QtCore.QRect(350, 530, 341, 32))
         self.button_box.setOrientation(QtCore.Qt.Horizontal)
         self.button_box.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.button_box.setObjectName("button_box")
-
-        # Draw Rectangle Button
         self.dRectangleButton = QtWidgets.QPushButton(drawshapedialog)
-        self.dRectangleButton.setGeometry(QtCore.QRect(50, 50, 111, 23))
+        self.dRectangleButton.setGeometry(QtCore.QRect(40, 190, 111, 23))
         self.dRectangleButton.setObjectName("dRectangleButton")
-
-        # Draw Circle Button
+        self.groupBox_selectcategory = QtWidgets.QGroupBox(drawshapedialog)
+        self.groupBox_selectcategory.setGeometry(QtCore.QRect(20, 60, 661, 101))
+        self.groupBox_selectcategory.setObjectName("groupBox_selectcategory")
+        self.label = QtWidgets.QLabel(self.groupBox_selectcategory)
+        self.label.setGeometry(QtCore.QRect(30, 30, 301, 16))
+        self.label.setObjectName("label")
+        self.comboBox_selectcategory = QtWidgets.QComboBox(self.groupBox_selectcategory)
+        self.comboBox_selectcategory.setGeometry(QtCore.QRect(360, 30, 141, 22))
+        self.comboBox_selectcategory.setObjectName("comboBox_selectcategory")
+        self.comboBox_selectcategory.addItem("")
+        self.comboBox_selectcategory.addItem("")
+        self.comboBox_selectcategory.addItem("")
+        self.comboBox_selectcategory.addItem("")
+        self.cShapeButton = QtWidgets.QPushButton(self.groupBox_selectcategory)
+        self.cShapeButton.setGeometry(QtCore.QRect(520, 60, 131, 23))
+        self.cShapeButton.setObjectName("cShapeButton")
+        self.dockWidget = QtWidgets.QDockWidget(drawshapedialog)
+        self.dockWidget.setGeometry(QtCore.QRect(580, 10, 120, 38))
+        self.dockWidget.setObjectName("dockWidget")
+        self.dockWidgetContents = QtWidgets.QWidget()
+        self.dockWidgetContents.setObjectName("dockWidgetContents")
+        self.dockWidget.setWidget(self.dockWidgetContents)
         self.dCircleButton = QtWidgets.QPushButton(drawshapedialog)
-        self.dCircleButton.setGeometry(QtCore.QRect(50, 100, 111, 23))
+        self.dCircleButton.setGeometry(QtCore.QRect(40, 230, 111, 23))
         self.dCircleButton.setObjectName("dCircleButton")
-
-        # Draw Polygon Button
         self.dPolygonButton = QtWidgets.QPushButton(drawshapedialog)
-        self.dPolygonButton.setGeometry(QtCore.QRect(50, 150, 111, 23))
+        self.dPolygonButton.setGeometry(QtCore.QRect(40, 270, 111, 23))
         self.dPolygonButton.setObjectName("dPolygonButton")
-
+        self.Labletest = QtWidgets.QLabel(drawshapedialog)
+        self.Labletest.setGeometry(QtCore.QRect(90, 340, 151, 61))
+        self.Labletest.setObjectName("Labletest")
 
         self.retranslateUi(drawshapedialog)
         self.button_box.accepted.connect(drawshapedialog.accept)
@@ -45,14 +63,17 @@ class Ui_drawshapedialog(object):
     def retranslateUi(self, drawshapedialog):
         _translate = QtCore.QCoreApplication.translate
         drawshapedialog.setWindowTitle(_translate("drawshapedialog", "Draw Shape"))
-        # Draw Rectangle Button
         self.dRectangleButton.setText(_translate("drawshapedialog", "Draw Rectangle"))
+        self.groupBox_selectcategory.setTitle(_translate("drawshapedialog", "1- Category of shapefile"))
+        self.label.setText(_translate("drawshapedialog", "Please select category of the Shapefile you want to add"))
+        self.comboBox_selectcategory.setItemText(0, _translate("drawshapedialog", "Reservoir"))
+        self.comboBox_selectcategory.setItemText(1, _translate("drawshapedialog", "Ponds"))
+        self.comboBox_selectcategory.setItemText(2, _translate("drawshapedialog", "Wetland"))
+        self.comboBox_selectcategory.setItemText(3, _translate("drawshapedialog", "Playas"))
+        self.cShapeButton.setText(_translate("drawshapedialog", "Create shapefile"))
         self.dCircleButton.setText(_translate("drawshapedialog", "Draw Circle"))
         self.dPolygonButton.setText(_translate("drawshapedialog", "Draw Polygon"))
-
-
-
-
+        self.Labletest.setText(_translate("drawshapedialog", "TextLabel"))
 #
 # from PyQt5 import QtCore, QtGui, QtWidgets
 #
