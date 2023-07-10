@@ -4522,12 +4522,13 @@ If you want to start again from scratch, reload the lakes shapefile."""
         self.progress('')
         return drainStreamsFile
 
-    # runDrawShape opens a dialog for darwing polygons. #007#
+    # runDrawShape opens a dialog for drawing polygons. #007#
     def runDrawShape(self) -> None:
         #008#
         """Run the landscape dialog and create files as requested."""
+
         # self._gv.iface = iface
-        self.D = drawshape(self._gv.iface)
+        self.D = drawshape(self._gv.iface, self._gv.crsProject)
         self.D.run()
 
 
@@ -4782,9 +4783,9 @@ If you want to start again from scratch, reload the lakes shapefile."""
         # close any landscape dialog if visible
         if self.L is not None and self.L._dlg.isVisible():
             self.L.cancel()
-        # close any Drawshape dialog if visible
-        if self.D is not None and self.D._dlg.isVisible():
-            self.D.cancel()
+        # close any Drawshape dialog if visible #change#
+        # if self.D is not None and self.D._dlg.isVisible():
+        #     self.D.cancel()
         self._dlg.close()
 
 
