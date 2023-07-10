@@ -31,7 +31,7 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.core import QgsFeature, QgsProject, QgsGeometry,\
     QgsCoordinateTransform, QgsCoordinateTransformContext, QgsMapLayer,\
     QgsFeatureRequest, QgsVectorLayer, QgsLayerTreeGroup, QgsRenderContext,\
-    QgsCoordinateReferenceSystem, QgsWkbTypes
+    QgsCoordinateReferenceSystem, QgsWkbTypes, QgsVectorFileWriter
 from qgis.gui import QgsRubberBand
 
 from .drawtools import DrawPoint, DrawRect, DrawLine, DrawCircle, DrawPolygon,\
@@ -288,6 +288,7 @@ class Qdraw(object):
         self.resetSB()
 
 
+
     def drawCircle(self):
         if self.tool:
             self.tool.reset()
@@ -488,7 +489,8 @@ then select an entity on the map.'
             layers = []
             while not name.strip() and not add and ok:
                 dlg = QDrawLayerDialog(self.iface, self.drawShape)
-                name, add, index, layers, ok = dlg.getName(
+                # add, the word add, for add layer in the outputs
+                name, index, layers, ok = dlg.getName(
                     self.iface, self.drawShape)
         if ok and not warning:
             layer = None
@@ -517,15 +519,29 @@ then select an entity on the map.'
             feature.setAttributes([name])
             layer.dataProvider().addFeatures([feature])
             layer.commitChanges()
+            # changes #
+            project = QgsProject.instance()
+            output_directory = project.homePath() + '/drshapes/'
+            os.makedirs(output_directory, exist_ok=True)
+            output_path = os.path.join(output_directory, layer.name())
+            QgsVectorFileWriter.writeAsVectorFormat(layer, output_path, 'UTF-8', project.crs(),
+                                                    driverName='ESRI Shapefile')
+            # edit to add the shapefile instead of drawing polygon
+            # it saves the first polygon
+            layerShp = QgsVectorLayer(output_directory, layer.name()+'.shp', 'ogr')
+
             if not add:
-                pjt = QgsProject.instance()
-                pjt.addMapLayer(layer, False)
-                if pjt.layerTreeRoot().findGroup(self.tr('Drawings')) is None:
-                    pjt.layerTreeRoot().insertChildNode(
+                # pjt = QgsProject.instance()
+                project.addMapLayer(layerShp, False)
+                if project.layerTreeRoot().findGroup(self.tr('Drawings')) is None:
+                    project.layerTreeRoot().insertChildNode(
                         0, QgsLayerTreeGroup(self.tr('Drawings')))
-                group = pjt.layerTreeRoot().findGroup(
+                group = project.layerTreeRoot().findGroup(
                     self.tr('Drawings'))
-                group.insertLayer(0, layer)
+                group.insertLayer(0, layerShp)
+
+
+
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             self.iface.mapCanvas().refresh()
         else:
