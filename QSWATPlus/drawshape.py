@@ -26,11 +26,12 @@
  ***************************************************************************
 """
 
-
 from qgis.PyQt.QtCore import QObject
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction , QMessageBox
+from qgis.PyQt.QtWidgets import QAction, QMessageBox
+
+from qgis.core import QgsProject
 
 # Initialize Qt resources from file resources.py
 # from .resources import *
@@ -50,17 +51,21 @@ import os.path
 
 class drawshape(QObject):
 
-    def __init__(self, iface):
+    def __init__(self, iface, crsProject):
+        super().__init__()
         """Constructor.
-
+        
         :param iface: An interface instance that will be passed to this class
             which provides the hook by which you can manipulate the QGIS
             application at run time.
         :type iface: QgsInterface
         """
 
+        self.rezNumber = 0
         # Save reference to the QGIS interface
         self.iface = iface
+        self.crsProject = crsProject
+        self.dlg = drawshapedialog()
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
@@ -98,21 +103,17 @@ class drawshape(QObject):
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('drawshape', message)
 
-
-
-
-
     def add_action(
-        self,
-        icon_path,
-        text,
-        callback,
-        enabled_flag=True,
-        add_to_menu=True,
-        add_to_toolbar=True,
-        status_tip=None,
-        whats_this=None,
-        parent=None):
+            self,
+            icon_path,
+            text,
+            callback,
+            enabled_flag=True,
+            add_to_menu=True,
+            add_to_toolbar=True,
+            status_tip=None,
+            whats_this=None,
+            parent=None):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -189,7 +190,6 @@ class drawshape(QObject):
         # will be set False in run()
         self.first_start = True
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -205,8 +205,11 @@ class drawshape(QObject):
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
         # if self.first_start == True:
         #     self.first_start = False
-        self.dlg = drawshapedialog()
+
         # self.iface = iface
+
+        self.dlg.cShapeButton.clicked.connect(self.handle_button_click)
+
         qdraw_instance = Qdraw(self.iface)
         self.dlg.dRectangleButton.clicked.connect(qdraw_instance.drawRect)
 
@@ -227,21 +230,17 @@ class drawshape(QObject):
             # substitute with your code.
             pass
 
+    #####################################################################################
+    #####################################################################################
+    #####################################################################################
 
-#####################################################################################
-#####################################################################################
-#####################################################################################
+    def handle_button_click(self):
+        self.rezNumber = self.dlg.comboBox_selectcategory.currentIndex() + 1
 
-
-
-
-
-
-
-
-
-
-
+        # self.dlg.Labletest.setText()
+        self.dlg.groupBox_selectcategory.setEnabled(False)
+        # self.
+    #     self.dlg.Labletest.setText('dgdfgdg')
 
 #####################################################################################
 #####################################################################################
