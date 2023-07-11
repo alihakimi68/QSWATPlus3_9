@@ -51,7 +51,7 @@ import os.path
 
 class drawshape(QObject):
 
-    def __init__(self, iface, crsProject):
+    def __init__(self, iface):
         super().__init__()
         """Constructor.
         
@@ -61,10 +61,10 @@ class drawshape(QObject):
         :type iface: QgsInterface
         """
 
-        self.rezNumber = 0
+
         # Save reference to the QGIS interface
         self.iface = iface
-        self.crsProject = crsProject
+        # self.crsProject = crsProject
         self.dlg = drawshapedialog()
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
@@ -209,8 +209,8 @@ class drawshape(QObject):
         # self.iface = iface
 
         self.dlg.cShapeButton.clicked.connect(self.handle_button_click)
-
-        qdraw_instance = Qdraw(self.iface)
+        rezNumber = self.handle_button_click()
+        qdraw_instance = Qdraw(self.iface, rezNumber)
         self.dlg.dRectangleButton.clicked.connect(qdraw_instance.drawRect)
 
         self.dlg.dCircleButton.clicked.connect(qdraw_instance.drawCircle)
@@ -235,12 +235,13 @@ class drawshape(QObject):
     #####################################################################################
 
     def handle_button_click(self):
-        self.rezNumber = self.dlg.comboBox_selectcategory.currentIndex() + 1
+        rezNumber = self.dlg.comboBox_selectcategory.currentIndex() + 1
 
         # self.dlg.Labletest.setText()
-        self.dlg.groupBox_selectcategory.setEnabled(False)
+        # self.dlg.groupBox_selectcategory.setEnabled(False)
         # self.
-    #     self.dlg.Labletest.setText('dgdfgdg')
+        self.dlg.Labletest.setText(str(rezNumber))
+        return rezNumber
 
 #####################################################################################
 #####################################################################################
