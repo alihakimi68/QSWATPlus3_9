@@ -24,14 +24,14 @@ from builtins import object
 
 from qgis.PyQt.QtCore import QObject
 
-from qgis.PyQt.QtCore import QTranslator, QSettings, QCoreApplication, QLocale, qVersion
+from qgis.PyQt.QtCore import QTranslator, QSettings, QCoreApplication, QLocale, qVersion, QVariant
 from qgis.PyQt.QtWidgets import QAction, QMessageBox, QMenu, QInputDialog
 from qgis.PyQt.QtGui import QIcon
 
 from qgis.core import QgsFeature, QgsProject, QgsGeometry,\
     QgsCoordinateTransform, QgsCoordinateTransformContext, QgsMapLayer,\
     QgsFeatureRequest, QgsVectorLayer, QgsLayerTreeGroup, QgsRenderContext,\
-    QgsCoordinateReferenceSystem, QgsWkbTypes, QgsVectorFileWriter
+    QgsCoordinateReferenceSystem, QgsWkbTypes, QgsVectorFileWriter, QgsField, QgsVectorLayerUtils
 from qgis.gui import QgsRubberBand
 
 from .drawtools import DrawPoint, DrawRect, DrawLine, DrawCircle, DrawPolygon,\
@@ -44,7 +44,7 @@ import os
 
 
 class Qdraw(object):
-    def __init__(self, iface):
+    def __init__(self, iface, rezNumber):
         overrideLocale = QSettings().value("locale/overrideFlag", False, type=bool)
         if not overrideLocale: locale = QLocale.system().name()
         else:
@@ -77,6 +77,8 @@ class Qdraw(object):
         self.toolbar.setObjectName('Qdraw')
 
         self.settings = QdrawSettings()
+
+        self.rezNumber = rezNumber
 
     def unload(self):
         for action in self.actions:
@@ -458,28 +460,28 @@ then select an entity on the map.'
         errBuffer_noAtt = False
         errBuffer_Vertices = False
 
-        layer = self.iface.layerTreeView().currentLayer()
-        if self.toolname == 'drawBuffer':
-            if self.bGeom is None:
-                warning = True
-                errBuffer_noAtt = True
-            else:
-                perim, ok = QInputDialog.getDouble(
-                    self.iface.mainWindow(), self.tr('Perimeter'),
-                    self.tr('Give a perimeter in m:')
-                    + '\n'+self.tr('(works only with metric crs)'),
-                    min=0)
-                g = self.bGeom.buffer(perim, 40)
-                rb.setToGeometry(g, QgsVectorLayer(
-                    "Polygon?crs="+layer.crs().authid(), "", "memory"))
-                if g.length() == 0 and ok:
-                    warning = True
-                    errBuffer_Vertices = True
-
-        if self.toolname == 'drawCopies':
-            if g.length() < 0:
-                warning = True
-                errBuffer_noAtt = True
+        # layer = self.iface.layerTreeView().currentLayer()
+        # if self.toolname == 'drawBuffer':
+        #     if self.bGeom is None:
+        #         warning = True
+        #         errBuffer_noAtt = True
+        #     else:
+        #         perim, ok = QInputDialog.getDouble(
+        #             self.iface.mainWindow(), self.tr('Perimeter'),
+        #             self.tr('Give a perimeter in m:')
+        #             + '\n'+self.tr('(works only with metric crs)'),
+        #             min=0)
+        #         g = self.bGeom.buffer(perim, 40)
+        #         rb.setToGeometry(g, QgsVectorLayer(
+        #             "Polygon?crs="+layer.crs().authid(), "", "memory"))
+        #         if g.length() == 0 and ok:
+        #             warning = True
+        #             errBuffer_Vertices = True
+        #
+        # if self.toolname == 'drawCopies':
+        #     if g.length() < 0:
+        #         warning = True
+        #         errBuffer_noAtt = True
 
         if ok and not warning:
             name = ''
@@ -493,30 +495,63 @@ then select an entity on the map.'
                 name, index, layers, ok = dlg.getName(
                     self.iface, self.drawShape)
         if ok and not warning:
-            layer = None
-            if add:
-                layer = layers[index]
-                if self.drawShape in ['point', 'XYpoint']:
-                    g = g.centroid()
-            else:
-                if self.drawShape == 'point':
-                    layer = QgsVectorLayer("Point?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
-                    g = g.centroid()  # force geometry as point
-                elif self.drawShape == 'XYpoint':
-                    layer = QgsVectorLayer("Point?crs="+self.XYcrs.authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
-                    g = g.centroid()
-                elif self.drawShape == 'line':
-                    layer = QgsVectorLayer("LineString?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
-                    # fix_print_with_import
-                    print("LineString?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)")
-                else:
-                    layer = QgsVectorLayer("Polygon?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
+            # layer = None
+            # if add:
+            #     layer = layers[index]
+            #     if self.drawShape in ['point', 'XYpoint']:
+            #         g = g.centroid()
+            # else:
+            #     if self.drawShape == 'point':
+            #         layer = QgsVectorLayer("Point?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
+            #         g = g.centroid()  # force geometry as point
+            #     elif self.drawShape == 'XYpoint':
+            #         layer = QgsVectorLayer("Point?crs="+self.XYcrs.authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
+            #         g = g.centroid()
+            #     elif self.drawShape == 'line':
+            #         layer = QgsVectorLayer("LineString?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
+            #         # fix_print_with_import
+            #         print("LineString?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)")
+            #     else:
+
+
+
+            layer = QgsVectorLayer("Polygon?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
             layer.startEditing()
             symbols = layer.renderer().symbols(QgsRenderContext())  # todo which context ?
             symbols[0].setColor(self.settings.getColor())
             feature = QgsFeature()
             feature.setGeometry(g)
-            feature.setAttributes([name])
+
+            #Add new attribute fields
+            layer.dataProvider().addAttributes([
+                QgsField('Lake_ID', QVariant.Int),
+                QgsField('REZ', QVariant.Int),
+                QgsField('Area', QVariant.Double),
+                QgsField('Depth', QVariant.Double)
+            ])
+
+            #Set the primary key to 'Lake_ID'
+            # layer.dataProvider().addUniqueIndex(layer.fields().indexFromName('Lake_ID'))
+
+            #Update the attribute values for each feature
+            # for features in layer.getFeatures():
+                # # Set the values for the attributes
+                # features['Lake_ID'] = 1  # Replace lake_id with your desired unique identifier value
+                # features['Name'] = layer.name()
+                # features['REZ'] = 1  # Replace rez_value with your desired value for the REZ attribute
+                # # Calculate and set the area attribute
+            area = feature.geometry().area()  # Calculate the area using QgsGeometry.area()
+                # features['Area'] = area
+                # features['Depth'] = 0
+
+            attrs = [name,1,self.rezNumber,area,0]
+                # Set the attributes for the feature
+            # feature.setAttributes(attrs)
+                # Update the feature
+            # layer.updateFeature(feature)
+            # layer.commitChanges()
+
+            feature.setAttributes(attrs)
             layer.dataProvider().addFeatures([feature])
             layer.commitChanges()
             # changes #
@@ -528,8 +563,8 @@ then select an entity on the map.'
                                                     driverName='ESRI Shapefile')
             # edit to add the shapefile instead of drawing polygon
             # it saves the first polygon
-            layerShp = QgsVectorLayer(output_directory, layer.name()+'.shp', 'ogr')
-
+            # layerShp = QgsVectorLayer(output_directory, layer.name()+'.shp', 'ogr')
+            layerShp = QgsVectorLayer(output_path + '.shp', layer.name(), 'ogr')
             if not add:
                 # pjt = QgsProject.instance()
                 project.addMapLayer(layerShp, False)
@@ -539,8 +574,6 @@ then select an entity on the map.'
                 group = project.layerTreeRoot().findGroup(
                     self.tr('Drawings'))
                 group.insertLayer(0, layerShp)
-
-
 
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
             self.iface.mapCanvas().refresh()
