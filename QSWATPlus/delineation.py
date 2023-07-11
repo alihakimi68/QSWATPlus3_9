@@ -4528,7 +4528,7 @@ If you want to start again from scratch, reload the lakes shapefile."""
         """Run the landscape dialog and create files as requested."""
 
         # self._gv.iface = iface
-        self.D = drawshape(self._gv.iface, self._gv.crsProject)
+        self.D = drawshape(self._gv.iface)
         self.D.run()
 
 
