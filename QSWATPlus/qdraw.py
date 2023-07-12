@@ -44,7 +44,7 @@ import os
 
 
 class Qdraw(object):
-    def __init__(self, iface, rezNumber):
+    def __init__(self, iface, resNumber):
         overrideLocale = QSettings().value("locale/overrideFlag", False, type=bool)
         if not overrideLocale: locale = QLocale.system().name()
         else:
@@ -78,7 +78,7 @@ class Qdraw(object):
 
         self.settings = QdrawSettings()
 
-        self.rezNumber = rezNumber
+        self.resNumber = resNumber
 
     def unload(self):
         for action in self.actions:
@@ -513,7 +513,7 @@ then select an entity on the map.'
             #         print("LineString?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)")
             #     else:
 
-
+            # self.iface.messageBar().pushMessage("Error", str(self.resNumber)+'in Qdraw', level=2, duration=5)
 
             layer = QgsVectorLayer("Polygon?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
             layer.startEditing()
@@ -525,7 +525,7 @@ then select an entity on the map.'
             #Add new attribute fields
             layer.dataProvider().addAttributes([
                 QgsField('Lake_ID', QVariant.Int),
-                QgsField('REZ', QVariant.Int),
+                QgsField('RES', QVariant.Int),
                 QgsField('Area', QVariant.Double),
                 QgsField('Depth', QVariant.Double)
             ])
@@ -544,7 +544,7 @@ then select an entity on the map.'
                 # features['Area'] = area
                 # features['Depth'] = 0
 
-            attrs = [name,1,self.rezNumber,area,0]
+            attrs = [name,1,self.resNumber,area,0]
                 # Set the attributes for the feature
             # feature.setAttributes(attrs)
                 # Update the feature
