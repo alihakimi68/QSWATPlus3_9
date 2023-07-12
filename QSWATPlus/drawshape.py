@@ -198,12 +198,12 @@ class drawshape(QObject):
         self.dlg.cShapeButton.clicked.connect(self.handle_button_click)
 
         # Run the dialog event loop
-        result = self.dlg.exec_()
-        # See if OK was pressed
-        if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
-            pass
+        # result = self.dlg.exec_()
+        # # See if OK was pressed
+        # if result:
+        #     # Do something useful here - delete the line containing pass and
+        #     # substitute with your code.
+        #     pass
 
 
     def handle_button_click(self):
