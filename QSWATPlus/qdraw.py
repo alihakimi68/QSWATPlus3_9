@@ -32,7 +32,7 @@ from qgis.core import QgsFeature, QgsProject, QgsGeometry,\
     QgsCoordinateTransform, QgsCoordinateTransformContext, QgsMapLayer,\
     QgsFeatureRequest, QgsVectorLayer, QgsLayerTreeGroup, QgsRenderContext,\
     QgsCoordinateReferenceSystem, QgsWkbTypes, QgsVectorFileWriter, QgsField, QgsVectorLayerUtils
-from qgis.gui import QgsRubberBand
+from qgis.gui import QgsRubberBand, QgsMapToolPan
 
 from .drawtools import DrawPoint, DrawRect, DrawLine, DrawCircle, DrawPolygon,\
     SelectPoint, XYDialog, DMSDialog
@@ -44,7 +44,7 @@ import os
 
 
 class Qdraw(object):
-    def __init__(self, iface, resNumber):
+    def __init__(self, iface, resNumber,output_directory,project):
         overrideLocale = QSettings().value("locale/overrideFlag", False, type=bool)
         if not overrideLocale: locale = QLocale.system().name()
         else:
@@ -79,6 +79,8 @@ class Qdraw(object):
         self.settings = QdrawSettings()
 
         self.resNumber = resNumber
+        self.output_directory = output_directory
+        self.project = project
 
     def unload(self):
         for action in self.actions:
@@ -524,59 +526,56 @@ then select an entity on the map.'
 
             #Add new attribute fields
             layer.dataProvider().addAttributes([
-                QgsField('Lake_ID', QVariant.Int),
+                QgsField('LakeId', QVariant.Int),
                 QgsField('RES', QVariant.Int),
                 QgsField('Area', QVariant.Double),
+                QgsField('CentroidX', QVariant.Double),
+                QgsField('CentroidY', QVariant.Double),
                 QgsField('Depth', QVariant.Double)
             ])
 
             #Set the primary key to 'Lake_ID'
             # layer.dataProvider().addUniqueIndex(layer.fields().indexFromName('Lake_ID'))
 
-            #Update the attribute values for each feature
-            # for features in layer.getFeatures():
-                # # Set the values for the attributes
-                # features['Lake_ID'] = 1  # Replace lake_id with your desired unique identifier value
-                # features['Name'] = layer.name()
-                # features['REZ'] = 1  # Replace rez_value with your desired value for the REZ attribute
-                # # Calculate and set the area attribute
+
             area = feature.geometry().area()  # Calculate the area using QgsGeometry.area()
+            centroid = feature.geometry().centroid().asPoint()
                 # features['Area'] = area
                 # features['Depth'] = 0
 
-            attrs = [name,1,self.resNumber,area,0]
-                # Set the attributes for the feature
-            # feature.setAttributes(attrs)
-                # Update the feature
-            # layer.updateFeature(feature)
-            # layer.commitChanges()
+            attrs = [name,1,self.resNumber,area,centroid.x(),centroid.y(),0]
+
 
             feature.setAttributes(attrs)
             layer.dataProvider().addFeatures([feature])
-            layer.commitChanges()
-            # changes #
-            project = QgsProject.instance()
-            output_directory = project.homePath() + '/drshapes/'
-            os.makedirs(output_directory, exist_ok=True)
-            output_path = os.path.join(output_directory, layer.name())
-            QgsVectorFileWriter.writeAsVectorFormat(layer, output_path, 'UTF-8', project.crs(),
+            layer.commitChanges(stopEditing=True)
+            layer.triggerRepaint()  # Refresh the layer on the map canvas
+
+
+            os.makedirs(self.output_directory, exist_ok=True)
+            output_path = os.path.join(self.output_directory, layer.name())
+            QgsVectorFileWriter.writeAsVectorFormat(layer, output_path, 'UTF-8', self.project.crs(),
                                                     driverName='ESRI Shapefile')
             # edit to add the shapefile instead of drawing polygon
             # it saves the first polygon
-            # layerShp = QgsVectorLayer(output_directory, layer.name()+'.shp', 'ogr')
+
             layerShp = QgsVectorLayer(output_path + '.shp', layer.name(), 'ogr')
             if not add:
-                # pjt = QgsProject.instance()
-                project.addMapLayer(layerShp, False)
-                if project.layerTreeRoot().findGroup(self.tr('Drawings')) is None:
-                    project.layerTreeRoot().insertChildNode(
+
+                self.project.addMapLayer(layerShp, False)
+                if self.project.layerTreeRoot().findGroup(self.tr('Drawings')) is None:
+                    self.project.layerTreeRoot().insertChildNode(
                         0, QgsLayerTreeGroup(self.tr('Drawings')))
-                group = project.layerTreeRoot().findGroup(
+                group = self.project.layerTreeRoot().findGroup(
                     self.tr('Drawings'))
                 group.insertLayer(0, layerShp)
 
             self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+            # Set the newly added shapefile layer as the current selected layer
+            self.iface.setActiveLayer(layerShp)
+
             self.iface.mapCanvas().refresh()
+            self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
         else:
             if warning:
                 if errBuffer_noAtt:
