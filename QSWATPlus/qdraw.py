@@ -462,29 +462,6 @@ then select an entity on the map.'
         errBuffer_noAtt = False
         errBuffer_Vertices = False
 
-        # layer = self.iface.layerTreeView().currentLayer()
-        # if self.toolname == 'drawBuffer':
-        #     if self.bGeom is None:
-        #         warning = True
-        #         errBuffer_noAtt = True
-        #     else:
-        #         perim, ok = QInputDialog.getDouble(
-        #             self.iface.mainWindow(), self.tr('Perimeter'),
-        #             self.tr('Give a perimeter in m:')
-        #             + '\n'+self.tr('(works only with metric crs)'),
-        #             min=0)
-        #         g = self.bGeom.buffer(perim, 40)
-        #         rb.setToGeometry(g, QgsVectorLayer(
-        #             "Polygon?crs="+layer.crs().authid(), "", "memory"))
-        #         if g.length() == 0 and ok:
-        #             warning = True
-        #             errBuffer_Vertices = True
-        #
-        # if self.toolname == 'drawCopies':
-        #     if g.length() < 0:
-        #         warning = True
-        #         errBuffer_noAtt = True
-
         if ok and not warning:
             name = ''
             ok = True
@@ -497,25 +474,6 @@ then select an entity on the map.'
                 name, index, layers, ok = dlg.getName(
                     self.iface, self.drawShape)
         if ok and not warning:
-            # layer = None
-            # if add:
-            #     layer = layers[index]
-            #     if self.drawShape in ['point', 'XYpoint']:
-            #         g = g.centroid()
-            # else:
-            #     if self.drawShape == 'point':
-            #         layer = QgsVectorLayer("Point?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
-            #         g = g.centroid()  # force geometry as point
-            #     elif self.drawShape == 'XYpoint':
-            #         layer = QgsVectorLayer("Point?crs="+self.XYcrs.authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
-            #         g = g.centroid()
-            #     elif self.drawShape == 'line':
-            #         layer = QgsVectorLayer("LineString?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
-            #         # fix_print_with_import
-            #         print("LineString?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)")
-            #     else:
-
-            # self.iface.messageBar().pushMessage("Error", str(self.resNumber)+'in Qdraw', level=2, duration=5)
 
             layer = QgsVectorLayer("Polygon?crs="+self.iface.mapCanvas().mapSettings().destinationCrs().authid()+"&field="+self.tr('Drawings')+":string(255)", name, "memory")
             layer.startEditing()
@@ -534,9 +492,6 @@ then select an entity on the map.'
                 QgsField('Depth', QVariant.Double)
             ])
 
-            #Set the primary key to 'Lake_ID'
-            # layer.dataProvider().addUniqueIndex(layer.fields().indexFromName('Lake_ID'))
-
 
             area = feature.geometry().area()  # Calculate the area using QgsGeometry.area()
             centroid = feature.geometry().centroid().asPoint()
@@ -553,29 +508,37 @@ then select an entity on the map.'
 
 
             os.makedirs(self.output_directory, exist_ok=True)
+
+            output_filename = layer.name() + '.shp'
+
             output_path = os.path.join(self.output_directory, layer.name())
-            QgsVectorFileWriter.writeAsVectorFormat(layer, output_path, 'UTF-8', self.project.crs(),
-                                                    driverName='ESRI Shapefile')
-            # edit to add the shapefile instead of drawing polygon
-            # it saves the first polygon
 
-            layerShp = QgsVectorLayer(output_path + '.shp', layer.name(), 'ogr')
-            if not add:
+            if os.path.exists(output_path+'.shp'):
+                self.iface.messageBar().pushMessage("Error", f'Shape name {output_path}.shp exist', level=2,
+                                                    duration=5)
 
-                self.project.addMapLayer(layerShp, False)
-                if self.project.layerTreeRoot().findGroup(self.tr('Drawings')) is None:
-                    self.project.layerTreeRoot().insertChildNode(
-                        0, QgsLayerTreeGroup(self.tr('Drawings')))
-                group = self.project.layerTreeRoot().findGroup(
-                    self.tr('Drawings'))
-                group.insertLayer(0, layerShp)
+            else:
+                QgsVectorFileWriter.writeAsVectorFormat(layer, output_path, 'UTF-8', self.project.crs(),
+                                                        driverName='ESRI Shapefile')
 
-            self.iface.layerTreeView().refreshLayerSymbology(layer.id())
-            # Set the newly added shapefile layer as the current selected layer
-            self.iface.setActiveLayer(layerShp)
+                layerShp = QgsVectorLayer(output_path + '.shp', layer.name(), 'ogr')
+                if not add:
 
-            self.iface.mapCanvas().refresh()
-            self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
+                    self.project.addMapLayer(layerShp, False)
+                    if self.project.layerTreeRoot().findGroup(self.tr('Drawings')) is None:
+                        self.project.layerTreeRoot().insertChildNode(
+                            0, QgsLayerTreeGroup(self.tr('Drawings')))
+                    group = self.project.layerTreeRoot().findGroup(
+                        self.tr('Drawings'))
+                    group.insertLayer(0, layerShp)
+
+                self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+                # Set the newly added shapefile layer as the current selected layer
+                self.iface.setActiveLayer(layerShp)
+
+                self.iface.mapCanvas().refresh()
+                self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
+
         else:
             if warning:
                 if errBuffer_noAtt:
@@ -586,12 +549,12 @@ then select an entity on the map.'
                     self.iface.messageBar().pushWarning(
                         self.tr('Warning'),
                         self.tr('You must give a non-null value for a \
-point\'s or line\'s perimeter !'))
+                                point\'s or line\'s perimeter !'))
                 else:
                     self.iface.messageBar().pushWarning(
                         self.tr('Warning'),
                         self.tr('There is no selected layer, or it is not \
-vector nor visible !'))
+                                vector nor visible !'))
         self.tool.reset()
         self.resetSB()
         self.bGeom = None
