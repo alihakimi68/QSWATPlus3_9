@@ -26,25 +26,22 @@
  ***************************************************************************
 """
 
-from qgis.PyQt.QtCore import QObject, Qt
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
+from qgis.PyQt.QtCore import QObject, Qt, QSettings, QTranslator, QCoreApplication
+
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction, QMessageBox, QToolBar, QVBoxLayout, QTableWidgetItem, \
-                                QAbstractItemView, QAbstractButton, QTableWidget, QStyledItemDelegate,\
-                                QPushButton, QMessageBox, QTableView
+from qgis.PyQt.QtWidgets import QAction, QMessageBox, QTableWidgetItem, QAbstractItemView,\
+                                QAbstractButton, QTableWidget, QStyledItemDelegate,\
+                                QPushButton, QMessageBox
 
-from qgis.PyQt.QtWidgets import QApplication, QStyleOptionViewItem, QStyledItemDelegate
+from qgis.core import QgsProject, QgsGeometry
 
-from qgis.core import QgsProject, QgsVectorLayer, QgsGeometry
+from qgis.gui import QgsMapToolEdit
 
 from functools import partial
 
 from .drawshapedialog import drawshapedialog
 from .qdraw import Qdraw
 import os.path
-
-
-
 
 
 class drawshape(QObject):
@@ -89,9 +86,16 @@ class drawshape(QObject):
         self.project = QgsProject.instance()
         self.output_directory = self.project.homePath() + '/drshapes/'
 
+    # def dock_to_right(self):
+    #
+    #
+    #
+    #     if self.dlg.isVisible():
+    #         self.dlg.hide()
+    #     else:
+    #         self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dlg.dockWidget)
+    #         # self.dlg.show()
 
-
-    # noinspection PyMethodMayBeStatic
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
 
@@ -189,7 +193,6 @@ class drawshape(QObject):
             text=self.tr(u'Draw shape'),
             callback=self.run,
             parent=None)
-            # parent = self.iface.mainWindow())
 
         # will be set False in run()
         self.first_start = True
@@ -210,8 +213,9 @@ class drawshape(QObject):
         self.dlg.show()
 
         self.dlg.cShapeButton.setCheckable(True)
-        # self.dlg.cShapeButton.toggle()
+
         self.dlg.groupBox_selectcategory.setEnabled(True)
+
         self.dlg.groupBox_drawpolygon.setEnabled(False)
 
         self.dlg.cShapeButton.clicked.connect(self.handle_button_click)
@@ -220,7 +224,7 @@ class drawshape(QObject):
 
         # Set the selection behavior to select entire rows
         self.dlg.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
-        # self.disable_table_editing()
+
 
 
 
@@ -258,7 +262,6 @@ class drawshape(QObject):
                 # substitute with your code.
                 pass
 
-
         elif not self.dlg.cShapeButton.isChecked():
             self.dlg.groupBox_selectcategory.setEnabled(True)
             self.dlg.groupBox_drawpolygon.setEnabled(False)
@@ -268,7 +271,7 @@ class drawshape(QObject):
             self.iface.messageBar().pushMessage("Error", 'This is not right', level=2, duration=5)
 
     def handle_refresh_click(self):
-        # Assuming you have a reference to the layer group
+        # layer group name in tree view
         group_name = "Drawings"
 
         root = QgsProject.instance().layerTreeRoot()
@@ -319,17 +322,36 @@ class drawshape(QObject):
                             # Get the attribute value for each desired column
                             attr_value = feature.attribute(column.name())
                             row.append(str(attr_value))
+
                         # Add the row to the table widget
                         self.dlg.tableWidget.insertRow(self.dlg.tableWidget.rowCount())
                         for i, value in enumerate(row):
                             item = QTableWidgetItem(value)
                             self.dlg.tableWidget.setItem(self.dlg.tableWidget.rowCount()-1, i, item)
+
                             # Create the delete link for the fourth column
                             delete_link = QPushButton("Delete")
                             delete_link.setProperty("row", self.dlg.tableWidget.rowCount() - 1)
-                            delete_link.clicked.connect(partial(MyTableWidget.delete_row_confirmation, delete_link))
+                            delete_link.clicked.connect(partial(DeleteTableWidget.delete_row_confirmation, delete_link, self.iface))
                             delete_link.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
                             self.dlg.tableWidget.setCellWidget(self.dlg.tableWidget.rowCount() - 1, 3, delete_link)
+
+                            # Create the modify link for the fifth column
+                            modify_link = QPushButton("Modify")
+                            modify_link.setProperty("row", self.dlg.tableWidget.rowCount() - 1)
+                            # mytest = ModifyTableWidget(self.iface)
+                            modify_link.clicked.connect(partial(ModifyTableWidget.modify_row_confirmation,modify_link, self.iface))
+                            modify_link.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
+                            self.dlg.tableWidget.setCellWidget(self.dlg.tableWidget.rowCount() - 1, 4, modify_link)
+
+                            # Create the move link for the sixth column
+                            move_link = QPushButton("Move")
+                            move_link.setProperty("row", self.dlg.tableWidget.rowCount() - 1)
+                            # mytest = ModifyTableWidget(self.iface)
+                            move_link.clicked.connect(
+                                partial(MoveTableWidget.move_row_confirmation, move_link, self.iface))
+                            move_link.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
+                            self.dlg.tableWidget.setCellWidget(self.dlg.tableWidget.rowCount() - 1, 5, move_link)
 
                     # Commit the changes to the layer's attribute table
                     layer.commitChanges(stopEditing=True)
@@ -341,6 +363,8 @@ class drawshape(QObject):
             self.iface.messageBar().pushMessage("Error", 'There is no Drawing group', level=2,
                                                 duration=5)
 
+
+
     def get_selected_row(self):
         selected_items = self.dlg.tableWidget.selectedItems()
 
@@ -351,22 +375,6 @@ class drawshape(QObject):
             return selected_row
         else:
             return -1  # No row selected
-
-    # Disable editing for all cells in a QTableWidget
-    # def disable_table_editing(self):
-    #     rows = self.dlg.tableWidget.rowCount()
-    #     cols = self.dlg.tableWidget.columnCount()
-    #
-    #     for row in range(rows):
-    #         for col in range(cols):
-    #             item = self.dlg.tableWidget.item(row, col)
-    #             if item is not None:
-    #                 item.setFlags(item.flags() & ~Qt.ItemIsEditable)
-    #             else:
-    #                 self.dlg.tableWidget.setItem(row, col, QTableWidgetItem())
-    #                 self.dlg.tableWidget.item(row, col).setFlags(
-    #                     self.dlg.tableWidget.item(row, col).flags() & ~Qt.ItemIsEditable
-    #                 )
 
 
 class DeleteLinkDelegate(QStyledItemDelegate):
@@ -384,21 +392,198 @@ class DeleteLinkDelegate(QStyledItemDelegate):
         super().paint(painter, option, index)
 
 
-class MyTableWidget(QTableWidget):
+class DeleteTableWidget(QTableWidget):
+
     def __init__(self, parent):
         super().__init__(parent)
         self.setItemDelegate(DeleteLinkDelegate(self))
 
-    def delete_row_confirmation(self):
+
+    def delete_row_confirmation(self,iface):
+        self.iface = iface
         button = self.sender()
         table_widget = button.parent()
+
         while not isinstance(table_widget, QTableWidget):
             table_widget = table_widget.parent()
         index = table_widget.currentIndex()
         if index.isValid():
             row = index.row()
-            reply = QMessageBox.question(table_widget, "Delete Row", "Are you sure you want to delete this row?",
+            first_column_value = table_widget.item(row, 0).text()
+
+            # the name of the polygon from first column of the table view
+            shapename = first_column_value
+
+            # confirmation dialog
+            reply = QMessageBox.question(table_widget, "Delete Row", f"Are you sure you want to delete {shapename} row?",
                                          QMessageBox.Yes | QMessageBox.No)
             if reply == QMessageBox.Yes:
                 table_widget.removeRow(row)
 
+                # layer group name in tree view
+                group_name = "Drawings"
+
+                root = QgsProject.instance().layerTreeRoot()
+                group = root.findGroup(group_name)
+                if group and group.nodeType() == 0:
+                    # Get the list of layers within the layer group
+                    layers = [layer.layer() for layer in group.findLayers()]
+
+                    if layers:
+                        canvas = self.iface.mapCanvas()
+
+                        # Iterate over each layer and extract desired columns
+                        for layer in layers:
+                            if layer and layer.name() == shapename:
+
+                                # Remove the layer from the QGIS map view
+                                QgsProject.instance().removeMapLayer(layer.id())
+                                canvas.refresh()
+
+                                break  # Exit the loop after finding and removing the layers
+
+
+class ModifyLinkDelegate(QStyledItemDelegate):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+    def paint(self, painter, option, index):
+        if index.column() == 4:
+            button = QAbstractButton(index.data(), self.parent())
+            button.setGeometry(option.rect)
+            button.clicked.connect(self.parent().modify_row_confirmation)
+            button.setAutoFillBackground(True)
+            button.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
+
+        super().paint(painter, option, index)
+
+
+class ModifyTableWidget(QTableWidget):
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setItemDelegate(ModifyLinkDelegate(self))
+
+    def modify_row_confirmation(self,iface):
+        self.iface = iface
+        button = self.sender()
+        table_widget = button.parent()
+
+        while not isinstance(table_widget, QTableWidget):
+            table_widget = table_widget.parent()
+        index = table_widget.currentIndex()
+        if index.isValid():
+            row = index.row()
+            first_column_value = table_widget.item(row, 0).text()
+
+            # the name of the polygon from first column of the table view
+            shapename = first_column_value
+
+            # layer group name in tree view
+            group_name = "Drawings"
+
+            root = QgsProject.instance().layerTreeRoot()
+            group = root.findGroup(group_name)
+            if group and group.nodeType() == 0:
+                # Get the list of layers within the layer group
+                layers = [layer.layer() for layer in group.findLayers()]
+
+                if layers:
+                    # Iterate over each layer and extract desired columns
+                    for layer in layers:
+                        if layer and layer.name() == shapename:
+                            # save previous changes
+
+                            layer.commitChanges(stopEditing=True)
+                            self.iface.setActiveLayer(layer)
+
+                            # Set the map canvas extent to match the layer's extent
+                            canvas = self.iface.mapCanvas()
+                            canvas.setExtent(layer.extent())
+                            canvas.refresh()
+
+                            # Start editing the layer
+                            if not layer.isEditable():
+                                layer.startEditing()
+                                # Activate the vertex editing tool
+                                vertex_tool = QgsMapToolEdit(canvas)
+
+                                # Activate the Vertex Tool
+                                canvas.setMapTool(vertex_tool)
+                                self.iface.actionVertexToolActiveLayer().trigger()
+
+                                # Exit the loop after finding and activating the layer for editing
+                                break
+
+
+class MoveLinkDelegate(QStyledItemDelegate):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+    def paint(self, painter, option, index):
+        if index.column() == 4:
+            button = QAbstractButton(index.data(), self.parent())
+            button.setGeometry(option.rect)
+            button.clicked.connect(self.parent().move_row_confirmation)
+            button.setAutoFillBackground(True)
+            button.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
+
+        super().paint(painter, option, index)
+
+
+class MoveTableWidget(QTableWidget):
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setItemDelegate(MoveLinkDelegate(self))
+        # self.iface = iface
+
+    def move_row_confirmation(self,iface):
+        self.iface = iface
+        button = self.sender()
+        table_widget = button.parent()
+
+        while not isinstance(table_widget, QTableWidget):
+            table_widget = table_widget.parent()
+        index = table_widget.currentIndex()
+        if index.isValid():
+            row = index.row()
+            first_column_value = table_widget.item(row, 0).text()
+
+            # the name of the polygon from first column of the table view
+            shapename = first_column_value
+
+            # layer group name in tree view
+            group_name = "Drawings"
+
+            root = QgsProject.instance().layerTreeRoot()
+            group = root.findGroup(group_name)
+            if group and group.nodeType() == 0:
+                # Get the list of layers within the layer group
+                layers = [layer.layer() for layer in group.findLayers()]
+
+                if layers:
+                    # Iterate over each layer and extract desired columns
+                    for layer in layers:
+                        if layer and layer.name() == shapename:
+                            # save previous changes
+                            layer.commitChanges(stopEditing=True)
+                            self.iface.setActiveLayer(layer)
+
+                            # Set the map canvas extent to match the layer's extent
+                            canvas = self.iface.mapCanvas()
+                            canvas.setExtent(layer.extent())
+                            canvas.refresh()
+
+                            # Start editing the layer
+                            if not layer.isEditable():
+                                layer.startEditing()
+                                # Activate the vertex editing tool
+                                vertex_tool = QgsMapToolEdit(canvas)
+
+                                # Activate the Vertex Tool
+                                canvas.setMapTool(vertex_tool)
+                                self.iface.actionMoveFeature().trigger()
+
+                                # Exit the loop after finding and activating the layer for editing
+                                break
