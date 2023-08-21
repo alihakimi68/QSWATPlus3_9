@@ -96,6 +96,7 @@ class QDrawLayerDialog(QDialog):
 
     def getName(self, iface, gtype):
         dialog = QDrawLayerDialog(iface, gtype)
+        dialog.setWindowFlags(Qt.WindowStaysOnTopHint)
         result = dialog.exec_()
         return (
             dialog.name.text(),

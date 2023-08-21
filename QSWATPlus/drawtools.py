@@ -27,7 +27,7 @@ from qgis.gui import QgsMapTool, QgsRubberBand, QgsMapToolEmitPoint, \
     QgsProjectionSelectionDialog
 from qgis.core import QgsWkbTypes, QgsPointXY
 
-from qgis.PyQt.QtCore import Qt, QCoreApplication, pyqtSignal, QPoint
+from qgis.PyQt.QtCore import Qt, QCoreApplication, pyqtSignal, QPoint, Qt
 from qgis.PyQt.QtWidgets import QDialog, QLineEdit, QDialogButtonBox, \
     QGridLayout, QLabel, QGroupBox, QVBoxLayout, QComboBox, QPushButton, \
     QInputDialog
@@ -145,6 +145,7 @@ class RectangleDialog(QDialog):
 
     def getSize(self):
         dialog = RectangleDialog()
+        dialog.setWindowFlags(Qt.WindowStaysOnTopHint)
         result = dialog.exec_()
 
         width = 0
@@ -242,22 +243,29 @@ class DrawCircle(QgsMapTool):
 
     def canvasReleaseEvent(self, e):
         '''La sélection est faîte'''
+
         if not e.button() == Qt.LeftButton:
             return None
         self.status = 0
         if self.rb.numberOfVertices() > 3:
             self.selectionDone.emit()
         else:
-            radius, ok = QInputDialog.getDouble(
-                self.iface.mainWindow(), tr('Radius'),
-                tr('Give a radius in m:'), min=0)
-            if radius > 0 and ok:
-                cp = self.toMapCoordinates(e.pos())
-                cp.setX(cp.x() + radius)
-                rbcircle(self.rb, self.toMapCoordinates(
-                    e.pos()), cp, self.segments)
-                self.rb.show()
-                self.selectionDone.emit()
+
+            dialog = QInputDialog()
+            dialog.setWindowFlags(Qt.WindowStaysOnTopHint)
+            dialog.setWindowTitle('Enter Radius')
+            dialog.setLabelText('Radius:')
+            ok = dialog.exec_()
+            if ok:
+                radius = float(dialog.textValue())
+
+                if radius > 0:
+                    cp = self.toMapCoordinates(e.pos())
+                    cp.setX(cp.x() + radius)
+                    rbcircle(self.rb, self.toMapCoordinates(
+                        e.pos()), cp, self.segments)
+                    self.rb.show()
+                    self.selectionDone.emit()
         return None
 
     def reset(self):

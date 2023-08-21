@@ -22,23 +22,20 @@ from __future__ import absolute_import
 from builtins import str
 from builtins import object
 
-from qgis.PyQt.QtCore import QObject
-
-from qgis.PyQt.QtCore import QTranslator, QSettings, QCoreApplication, QLocale, qVersion, QVariant
-from qgis.PyQt.QtWidgets import QAction, QMessageBox, QMenu, QInputDialog
+from qgis.PyQt.QtCore import QTranslator, QSettings, QCoreApplication, QLocale, qVersion, QVariant, Qt
+from qgis.PyQt.QtWidgets import QMessageBox
 from qgis.PyQt.QtGui import QIcon
 
-from qgis.core import QgsFeature, QgsProject, QgsGeometry,\
-    QgsCoordinateTransform, QgsCoordinateTransformContext, QgsMapLayer,\
-    QgsFeatureRequest, QgsVectorLayer, QgsLayerTreeGroup, QgsRenderContext,\
-    QgsCoordinateReferenceSystem, QgsWkbTypes, QgsVectorFileWriter, QgsField, QgsVectorLayerUtils
-from qgis.gui import QgsRubberBand, QgsMapToolPan
+from qgis.core import QgsFeature, QgsGeometry,QgsCoordinateTransform, QgsCoordinateTransformContext,\
+     QgsMapLayer,QgsFeatureRequest, QgsVectorLayer, QgsLayerTreeGroup, QgsRenderContext,\
+    QgsCoordinateReferenceSystem, QgsWkbTypes, QgsVectorFileWriter, QgsField
+
+from qgis.gui import QgsRubberBand
 
 from .drawtools import DrawPoint, DrawRect, DrawLine, DrawCircle, DrawPolygon,\
     SelectPoint, XYDialog, DMSDialog
 from .qdrawsettings import QdrawSettings
 from .qdrawlayerdialog import QDrawLayerDialog
-
 
 import os
 
@@ -91,124 +88,6 @@ class Qdraw(object):
     def tr(self, message):
         return QCoreApplication.translate('Qdraw', message)
 
-
-
-    # def add_action(
-    #         self,
-    #         icon_path,
-    #         text,
-    #         callback,
-    #         enabled_flag=True,
-    #         checkable=False,
-    #         add_to_menu=False,
-    #         add_to_toolbar=False,
-    #         status_tip=None,
-    #         whats_this=None,
-    #         menu=None,
-    #         parent=None):
-    #     icon = QIcon(icon_path)
-    #     action = QAction(icon, text, parent)
-    #     action.triggered.connect(callback)
-    #
-    #
-    #     action.setEnabled(enabled_flag)
-    #     action.setCheckable(checkable)
-    #
-    #     if status_tip is not None:
-    #         action.setStatusTip(status_tip)
-    #
-    #     if whats_this is not None:
-    #         action.setWhatsThis(whats_this)
-    #
-    #     if menu is not None:
-    #         action.setMenu(menu)
-    #
-    #     if add_to_toolbar:
-    #         self.toolbar.addAction(action)
-    #
-    #     if add_to_menu:
-    #         self.iface.addPluginToVectorMenu(
-    #             self.menu,
-    #             action)
-    #
-    #     self.actions.append(action)
-    #
-    #     return action
-
-
-
-    # def initGui(self):
-    #     pointMenu = QMenu()
-    #     pointMenu.addAction(
-    #         QIcon(':/plugins/Qgeric/resources/icon_DrawPtXY.png'),
-    #         self.tr('XY Point drawing tool'), self.drawXYPoint)
-    #     pointMenu.addAction(
-    #         QIcon(':/plugins/Qgeric/resources/icon_DrawPtDMS.png'),
-    #         self.tr('DMS Point drawing tool'), self.drawDMSPoint)
-    #     icon_path = ':/plugins/Qgeric/resources/icon_DrawPt.png'
-    #     self.add_action(
-    #         icon_path,
-    #         text=self.tr('Point drawing tool'),
-    #         checkable=True,
-    #         menu=pointMenu,
-    #         callback=self.drawPoint,
-    #         parent=self.iface.mainWindow()
-    #     )
-    #     icon_path = ':/plugins/Qgeric/resources/icon_DrawL.png'
-    #     self.add_action(
-    #         icon_path,
-    #         text=self.tr('Line drawing tool'),
-    #         checkable=True,
-    #         callback=self.drawLine,
-    #         parent=self.iface.mainWindow()
-    #     )
-    #     icon_path = ':/plugins/Qgeric/resources/icon_DrawR.png'
-    #     self.add_action(
-    #         icon_path,
-    #         text=self.tr('Rectangle drawing tool'),
-    #         checkable=True,
-    #         callback=self.drawRect,
-    #         parent=self.iface.mainWindow()
-    #     )
-    #     icon_path = ':/plugins/Qgeric/resources/icon_DrawC.png'
-    #     self.add_action(
-    #         icon_path,
-    #         text=self.tr('Circle drawing tool'),
-    #         checkable=True,
-    #         callback=self.drawCircle,
-    #         parent=self.iface.mainWindow()
-    #     )
-    #     icon_path = ':/plugins/Qgeric/resources/icon_DrawP.png'
-    #     self.add_action(
-    #         icon_path,
-    #         text=self.tr('Polygon drawing tool'),
-    #         checkable=True,
-    #         callback=self.drawPolygon,
-    #         parent=self.iface.mainWindow()
-    #     )
-    #     bufferMenu = QMenu()
-    #     polygonBufferAction = QAction(
-    #         QIcon(':/plugins/Qgeric/resources/icon_DrawTP.png'),
-    #         self.tr('Polygon buffer drawing tool on the selected layer'),
-    #         bufferMenu)
-    #     polygonBufferAction.triggered.connect(self.drawPolygonBuffer)
-    #     bufferMenu.addAction(polygonBufferAction)
-    #     icon_path = ':/plugins/Qgeric/resources/icon_DrawT.png'
-    #     self.add_action(
-    #         icon_path,
-    #         text=self.tr('Buffer drawing tool on the selected layer'),
-    #         checkable=True,
-    #         menu=bufferMenu,
-    #         callback=self.drawBuffer,
-    #         parent=self.iface.mainWindow()
-    #     )
-    #     icon_path = ':/plugins/Qgeric/resources/icon_Settings.png'
-    #     self.add_action(
-    #         icon_path,
-    #         text=self.tr('Settings'),
-    #         callback=self.showSettingsWindow,
-    #         parent=self.iface.mainWindow()
-    #     )
 
     def drawPoint(self):
         if self.tool:
@@ -279,11 +158,6 @@ class Qdraw(object):
             self.tool.reset()
         self.tool = None
         self.tool = DrawRect(self.iface, self.settings.getColor())
-
-        # self.message_box = QMessageBox()
-        # self.message_box.setText(print(self.actions))
-        # self.message_box.exec_()
-        # self.tool.setAction(self.actions[2])
         self.tool.selectionDone.connect(self.draw)
         self.tool.move.connect(self.updateSB)
         self.iface.mapCanvas().setMapTool(self.tool)
@@ -306,6 +180,7 @@ class Qdraw(object):
         self.resetSB()
 
     def drawPolygon(self):
+
         if self.tool:
             self.tool.reset()
         self.tool = DrawPolygon(self.iface, self.settings.getColor())
@@ -456,7 +331,7 @@ then select an entity on the map.'
     def draw(self):
         rb = self.tool.rb
         g = rb.asGeometry()
-
+        add = False
         ok = True
         warning = False
         errBuffer_noAtt = False
@@ -470,6 +345,7 @@ then select an entity on the map.'
             layers = []
             while not name.strip() and not add and ok:
                 dlg = QDrawLayerDialog(self.iface, self.drawShape)
+                dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 # add, the word add, for add layer in the outputs
                 name, index, layers, ok = dlg.getName(
                     self.iface, self.drawShape)
@@ -492,24 +368,17 @@ then select an entity on the map.'
                 QgsField('Depth', QVariant.Double)
             ])
 
-
             area = feature.geometry().area()  # Calculate the area using QgsGeometry.area()
             centroid = feature.geometry().centroid().asPoint()
-                # features['Area'] = area
-                # features['Depth'] = 0
 
             attrs = [name,1,self.resNumber,area,centroid.x(),centroid.y(),0]
-
 
             feature.setAttributes(attrs)
             layer.dataProvider().addFeatures([feature])
             layer.commitChanges(stopEditing=True)
             layer.triggerRepaint()  # Refresh the layer on the map canvas
 
-
             os.makedirs(self.output_directory, exist_ok=True)
-
-            output_filename = layer.name() + '.shp'
 
             output_path = os.path.join(self.output_directory, layer.name())
 
@@ -531,13 +400,10 @@ then select an entity on the map.'
                     group = self.project.layerTreeRoot().findGroup(
                         self.tr('Drawings'))
                     group.insertLayer(0, layerShp)
-
-                self.iface.layerTreeView().refreshLayerSymbology(layer.id())
-                # Set the newly added shapefile layer as the current selected layer
-                self.iface.setActiveLayer(layerShp)
-
-                self.iface.mapCanvas().refresh()
-                self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
+                    self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+                    # Set the newly added shapefile layer as the current selected layer
+                    self.iface.setActiveLayer(layerShp)
+                    self.iface.mapCanvas().refresh()
 
         else:
             if warning:
