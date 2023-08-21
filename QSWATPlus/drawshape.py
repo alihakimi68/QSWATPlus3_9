@@ -28,20 +28,24 @@
 
 from qgis.PyQt.QtCore import QObject, Qt, QSettings, QTranslator, QCoreApplication
 
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QIcon, QStandardItem, QColor
 from qgis.PyQt.QtWidgets import QAction, QMessageBox, QTableWidgetItem, QAbstractItemView,\
                                 QAbstractButton, QTableWidget, QStyledItemDelegate,\
-                                QPushButton, QMessageBox
+                                QPushButton, QMessageBox, QFileDialog
 
-from qgis.core import QgsProject, QgsGeometry
+from qgis.core import QgsProject, QgsGeometry, QgsVectorLayer, QgsWkbTypes, QgsFillSymbol
 
-from qgis.gui import QgsMapToolEdit
+from qgis.gui import QgsMapToolEdit, QgsMapToolPan
 
 from functools import partial
 
 from .drawshapedialog import drawshapedialog
 from .qdraw import Qdraw
 import os.path
+import random
+
+
+
 
 
 class drawshape(QObject):
@@ -59,6 +63,7 @@ class drawshape(QObject):
         self.iface = iface
         # self.crsProject = crsProject
         self.dlg = drawshapedialog()
+        self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
@@ -85,6 +90,7 @@ class drawshape(QObject):
 
         self.project = QgsProject.instance()
         self.output_directory = self.project.homePath() + '/drshapes/'
+        self.icon_folder = 'resources'
 
     # def dock_to_right(self):
     #
@@ -187,7 +193,7 @@ class drawshape(QObject):
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/drawshape/icon.png'
+        icon_path = ':/plugins/QSWATPlus3_9/QSWATPlus/resources/icon_DrawPtDMS.png'
         self.add_action(
             icon_path,
             text=self.tr(u'Draw shape'),
@@ -212,6 +218,8 @@ class drawshape(QObject):
         # show the dialog
         self.dlg.show()
 
+        self.create_drawings_group()
+
         self.dlg.cShapeButton.setCheckable(True)
 
         self.dlg.groupBox_selectcategory.setEnabled(True)
@@ -222,11 +230,30 @@ class drawshape(QObject):
 
         self.dlg.toolButton_Refresh.clicked.connect(self.handle_refresh_click)
 
+        self.dlg.toolButton_load.clicked.connect(self.handle_loadshape_click)
+
         # Set the selection behavior to select entire rows
         self.dlg.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
 
+    def create_drawings_group(self):
 
+        group_name = "Drawings"
 
+        # root = QgsProject.instance().layerTreeRoot()
+        # group = root.findGroup(group_name)
+        root = self.project.layerTreeRoot()
+        group = root.findGroup(self.tr('Drawings'))
+
+        if group and group.nodeType() == 0:
+            # self.iface.messageBar().pushMessage("Error", 'group exist', level=2, duration=5)
+            pass
+        # root = QgsProject.instance().layerTreeRoot()
+        else:
+            new_group = root.addGroup(group_name)
+            root.insertChildNode(0, new_group)
+            self.iface.mapCanvas().refresh()
+            # self.iface.messageBar().pushMessage("Error", 'group is created', level=2, duration=5)
+        return group, group_name
 
     def handle_button_click(self):
 
@@ -270,12 +297,11 @@ class drawshape(QObject):
         else:
             self.iface.messageBar().pushMessage("Error", 'This is not right', level=2, duration=5)
 
-    def handle_refresh_click(self):
-        # layer group name in tree view
-        group_name = "Drawings"
 
-        root = QgsProject.instance().layerTreeRoot()
-        group = root.findGroup(group_name)
+
+    def handle_refresh_click(self):
+        group, group_name = self.create_drawings_group()
+
         if group and group.nodeType() == 0:
             group = QgsProject.instance().layerTreeRoot().findGroup(group_name)
 
@@ -301,7 +327,7 @@ class drawshape(QObject):
                     # Iterate over features and populate the table widget
                     for feature in layer.getFeatures():
                         geometry = feature.geometry()
-                        area = QgsGeometry.area(geometry)
+                        area = "%.3f" % (QgsGeometry.area(geometry))
                         centroid = feature.geometry().centroid().asPoint()
 
                         field_index = fields.indexFromName('Area')  # Index of the 'Area' field
@@ -325,29 +351,43 @@ class drawshape(QObject):
 
                         # Add the row to the table widget
                         self.dlg.tableWidget.insertRow(self.dlg.tableWidget.rowCount())
+
                         for i, value in enumerate(row):
                             item = QTableWidgetItem(value)
                             self.dlg.tableWidget.setItem(self.dlg.tableWidget.rowCount()-1, i, item)
 
                             # Create the delete link for the fourth column
-                            delete_link = QPushButton("Delete")
+                            delete_link = QPushButton()
+                            icon_filename_delete = 'icon_DrawTP.png'
+                            icon_path_delete = os.path.join(os.path.dirname(__file__), self.icon_folder,
+                                                            icon_filename_delete)
+                            icon_delete = QIcon(icon_path_delete)
+                            delete_link.setIcon(icon_delete)
                             delete_link.setProperty("row", self.dlg.tableWidget.rowCount() - 1)
-                            delete_link.clicked.connect(partial(DeleteTableWidget.delete_row_confirmation, delete_link, self.iface))
+                            delete_link.clicked.connect(partial(DeleteTableWidget.delete_row_confirmation,
+                                                                delete_link, self.iface))
                             delete_link.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
                             self.dlg.tableWidget.setCellWidget(self.dlg.tableWidget.rowCount() - 1, 3, delete_link)
 
                             # Create the modify link for the fifth column
-                            modify_link = QPushButton("Modify")
+                            modify_link = QPushButton()
+                            icon_filename_modify = 'icon_DrawPt.png'
+                            icon_path_modify = os.path.join(os.path.dirname(__file__), self.icon_folder, icon_filename_modify)
+                            icon_modify = QIcon(icon_path_modify)
+                            modify_link.setIcon(icon_modify)
                             modify_link.setProperty("row", self.dlg.tableWidget.rowCount() - 1)
-                            # mytest = ModifyTableWidget(self.iface)
-                            modify_link.clicked.connect(partial(ModifyTableWidget.modify_row_confirmation,modify_link, self.iface))
+                            modify_link.clicked.connect(partial(ModifyTableWidget.modify_row_confirmation,modify_link,
+                                                                self.iface))
                             modify_link.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
                             self.dlg.tableWidget.setCellWidget(self.dlg.tableWidget.rowCount() - 1, 4, modify_link)
 
                             # Create the move link for the sixth column
-                            move_link = QPushButton("Move")
+                            move_link = QPushButton()
+                            icon_filename_move = 'icon_DrawPtXY.png'
+                            icon_path_move = os.path.join(os.path.dirname(__file__), self.icon_folder, icon_filename_move)
+                            icon_move = QIcon(icon_path_move)
+                            move_link.setIcon(icon_move)
                             move_link.setProperty("row", self.dlg.tableWidget.rowCount() - 1)
-                            # mytest = ModifyTableWidget(self.iface)
                             move_link.clicked.connect(
                                 partial(MoveTableWidget.move_row_confirmation, move_link, self.iface))
                             move_link.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
@@ -355,14 +395,75 @@ class drawshape(QObject):
 
                     # Commit the changes to the layer's attribute table
                     layer.commitChanges(stopEditing=True)
+                    self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
             else:
                 self.iface.messageBar().pushMessage("Error", 'There are no layers in Drawing group', level=2,
                                                     duration=5)
 
         else:
-            self.iface.messageBar().pushMessage("Error", 'There is no Drawing group', level=2,
+            self.iface.messageBar().pushMessage("Error", 'There is no Drawings group in the tree view', level=2,
                                                 duration=5)
 
+    def generate_random_color(self):
+        return QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    def handle_loadshape_click(self):
+
+        group, group_name = self.create_drawings_group()
+
+        if group and group.nodeType() == 0:
+
+            file_dialog = QFileDialog()
+            file_dialog.setNameFilter("Shapefiles (*.shp)")
+            file_dialog.setFileMode(QFileDialog.ExistingFiles)
+
+            if file_dialog.exec_():
+                file_paths = file_dialog.selectedFiles()
+
+                for file_path in file_paths:
+                    layer_name = os.path.splitext(os.path.basename(file_path))[0]
+                    layer = QgsVectorLayer(file_path, layer_name, "ogr")
+
+                    if layer.isValid():
+                        if layer.geometryType() == QgsWkbTypes.PolygonGeometry:
+                            if layer.featureCount() == 1:
+                                # Generate a random color for the fill symbology
+                                random_fill_color = self.generate_random_color()
+
+                                # Create fill symbol
+                                fill_symbol = QgsFillSymbol.defaultSymbol(layer.geometryType())
+                                fill_symbol.setColor(random_fill_color)
+
+                                # Apply the symbology to the layer
+                                layer.renderer().setSymbol(fill_symbol)
+
+                                treelayers = [layers.layer() for layers in group.findLayers()]
+
+                                if treelayers:
+                                    # Iterate over each layer and extract desired columns
+                                    for layers in treelayers:
+                                        if layers and layer.name() == layers.name():
+                                            ok = False
+                                            break
+                                        else:
+                                            ok = True
+                                    if ok:
+                                        self.project.addMapLayer(layer, False)
+                                        group.insertLayer(0, layer)
+                                        self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+                                        self.iface.setActiveLayer(layer)
+                                        self.iface.mapCanvas().refresh()
+                                    if not ok:
+                                        self.iface.messageBar().pushMessage("Error",
+                                                                            'The layer is already imported',
+                                                                            level=2, duration=5)
+                            else:
+                                self.iface.messageBar().pushMessage("Error", 'There are more than 1 row (feature) in the shapefile',
+                                                                    level=2,duration=5)
+                        else:
+                            self.iface.messageBar().pushMessage("Error",
+                                                                'Only polygon shapefile is allowed to import',
+                                                                level=2, duration=5)
+        self.handle_refresh_click()
 
 
     def get_selected_row(self):
@@ -377,27 +478,10 @@ class drawshape(QObject):
             return -1  # No row selected
 
 
-class DeleteLinkDelegate(QStyledItemDelegate):
-    def __init__(self, parent):
-        super().__init__(parent)
-
-    def paint(self, painter, option, index):
-        if index.column() == 3:
-            button = QAbstractButton(index.data(), self.parent())
-            button.setGeometry(option.rect)
-            button.clicked.connect(self.parent().delete_row_confirmation)
-            button.setAutoFillBackground(True)
-            button.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
-
-        super().paint(painter, option, index)
-
-
 class DeleteTableWidget(QTableWidget):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.setItemDelegate(DeleteLinkDelegate(self))
-
 
     def delete_row_confirmation(self,iface):
         self.iface = iface
@@ -421,10 +505,9 @@ class DeleteTableWidget(QTableWidget):
                 table_widget.removeRow(row)
 
                 # layer group name in tree view
-                group_name = "Drawings"
+                drawshapemethod = drawshape(self.iface)
+                group, group_name = drawshapemethod.create_drawings_group()
 
-                root = QgsProject.instance().layerTreeRoot()
-                group = root.findGroup(group_name)
                 if group and group.nodeType() == 0:
                     # Get the list of layers within the layer group
                     layers = [layer.layer() for layer in group.findLayers()]
@@ -443,26 +526,10 @@ class DeleteTableWidget(QTableWidget):
                                 break  # Exit the loop after finding and removing the layers
 
 
-class ModifyLinkDelegate(QStyledItemDelegate):
-    def __init__(self, parent):
-        super().__init__(parent)
-
-    def paint(self, painter, option, index):
-        if index.column() == 4:
-            button = QAbstractButton(index.data(), self.parent())
-            button.setGeometry(option.rect)
-            button.clicked.connect(self.parent().modify_row_confirmation)
-            button.setAutoFillBackground(True)
-            button.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
-
-        super().paint(painter, option, index)
-
-
 class ModifyTableWidget(QTableWidget):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.setItemDelegate(ModifyLinkDelegate(self))
 
     def modify_row_confirmation(self,iface):
         self.iface = iface
@@ -480,10 +547,9 @@ class ModifyTableWidget(QTableWidget):
             shapename = first_column_value
 
             # layer group name in tree view
-            group_name = "Drawings"
+            drawshapemethod = drawshape(self.iface)
+            group, group_name = drawshapemethod.create_drawings_group()
 
-            root = QgsProject.instance().layerTreeRoot()
-            group = root.findGroup(group_name)
             if group and group.nodeType() == 0:
                 # Get the list of layers within the layer group
                 layers = [layer.layer() for layer in group.findLayers()]
@@ -516,27 +582,10 @@ class ModifyTableWidget(QTableWidget):
                                 break
 
 
-class MoveLinkDelegate(QStyledItemDelegate):
-    def __init__(self, parent):
-        super().__init__(parent)
-
-    def paint(self, painter, option, index):
-        if index.column() == 4:
-            button = QAbstractButton(index.data(), self.parent())
-            button.setGeometry(option.rect)
-            button.clicked.connect(self.parent().move_row_confirmation)
-            button.setAutoFillBackground(True)
-            button.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
-
-        super().paint(painter, option, index)
-
-
 class MoveTableWidget(QTableWidget):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.setItemDelegate(MoveLinkDelegate(self))
-        # self.iface = iface
 
     def move_row_confirmation(self,iface):
         self.iface = iface
@@ -554,10 +603,9 @@ class MoveTableWidget(QTableWidget):
             shapename = first_column_value
 
             # layer group name in tree view
-            group_name = "Drawings"
+            drawshapemethod = drawshape(self.iface)
+            group, group_name = drawshapemethod.create_drawings_group()
 
-            root = QgsProject.instance().layerTreeRoot()
-            group = root.findGroup(group_name)
             if group and group.nodeType() == 0:
                 # Get the list of layers within the layer group
                 layers = [layer.layer() for layer in group.findLayers()]
