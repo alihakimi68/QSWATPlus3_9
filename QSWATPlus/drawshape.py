@@ -393,8 +393,9 @@ class drawshape(QObject):
                     layer.commitChanges(stopEditing=True)
                     # self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
             else:
-                self.iface.messageBar().pushMessage("Error", 'There are no layers in Drawing group', level=2,
-                                                    duration=5)
+                # self.iface.messageBar().pushMessage("Error", 'There are no layers in Drawing group', level=2,
+                #                                     duration=5)
+                pass
 
         else:
             self.iface.messageBar().pushMessage("Error", 'There is no Drawings group in the tree view', level=2,
