@@ -33,7 +33,7 @@ from qgis.PyQt.QtWidgets import QAction, QMessageBox, QTableWidgetItem, QAbstrac
                                 QAbstractButton, QTableWidget, QStyledItemDelegate,\
                                 QPushButton, QMessageBox, QFileDialog
 
-from qgis.core import QgsProject, QgsGeometry, QgsVectorLayer, QgsWkbTypes, QgsFillSymbol
+from qgis.core import QgsProject, QgsGeometry, QgsVectorLayer, QgsWkbTypes, QgsFillSymbol, QgsLayerTreeGroup
 
 from qgis.gui import QgsMapToolEdit, QgsMapToolPan
 
@@ -218,7 +218,7 @@ class drawshape(QObject):
         # show the dialog
         self.dlg.show()
 
-        self.create_drawings_group()
+        # self.create_drawings_group()
 
         self.dlg.cShapeButton.setCheckable(True)
 
@@ -239,21 +239,16 @@ class drawshape(QObject):
 
         group_name = "Drawings"
 
-        # root = QgsProject.instance().layerTreeRoot()
-        # group = root.findGroup(group_name)
         root = self.project.layerTreeRoot()
-        group = root.findGroup(self.tr('Drawings'))
 
-        if group and group.nodeType() == 0:
-            # self.iface.messageBar().pushMessage("Error", 'group exist', level=2, duration=5)
-            pass
-        # root = QgsProject.instance().layerTreeRoot()
-        else:
-            new_group = root.addGroup(group_name)
-            root.insertChildNode(0, new_group)
-            self.iface.mapCanvas().refresh()
-            # self.iface.messageBar().pushMessage("Error", 'group is created', level=2, duration=5)
+        group = root.findGroup(group_name)
+
+        if group is None:
+            group = root.insertGroup(0, group_name)
+
         return group, group_name
+
+
 
     def handle_button_click(self):
 
@@ -300,10 +295,11 @@ class drawshape(QObject):
 
 
     def handle_refresh_click(self):
+
         group, group_name = self.create_drawings_group()
 
         if group and group.nodeType() == 0:
-            group = QgsProject.instance().layerTreeRoot().findGroup(group_name)
+            # group = QgsProject.instance().layerTreeRoot().findGroup(group_name)
 
             # Clear existing data in the table widget
             self.dlg.tableWidget.setRowCount(0)
@@ -395,7 +391,7 @@ class drawshape(QObject):
 
                     # Commit the changes to the layer's attribute table
                     layer.commitChanges(stopEditing=True)
-                    self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
+                    # self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
             else:
                 self.iface.messageBar().pushMessage("Error", 'There are no layers in Drawing group', level=2,
                                                     duration=5)
@@ -456,6 +452,16 @@ class drawshape(QObject):
                                         self.iface.messageBar().pushMessage("Error",
                                                                             'The layer is already imported',
                                                                             level=2, duration=5)
+                                elif not treelayers:
+                                    self.project.addMapLayer(layer, False)
+                                    group.insertLayer(0, layer)
+                                    self.iface.layerTreeView().refreshLayerSymbology(layer.id())
+                                    self.iface.setActiveLayer(layer)
+                                    self.iface.mapCanvas().refresh()
+                                else:
+                                    self.iface.messageBar().pushMessage("Error",
+                                                                        'Please make sure tha the Drawings group exists',
+                                                                        level=2, duration=5)
                             else:
                                 self.iface.messageBar().pushMessage("Error", 'There are more than 1 row (feature) in the shapefile',
                                                                     level=2,duration=5)
