@@ -226,7 +226,7 @@ class drawshape(QObject):
         self.dlg.comboBox_selectcategory.currentIndexChanged.connect(self.handle_button_click)
 
         # Create Qdraw instance
-        self.qdraw_instance = Qdraw(self.iface, 1, self.output_directory, self.project)
+        self.qdraw_instance = Qdraw(self.iface, 1, self.output_directory, self.project,self)
 
         # Connect the draw methods to the buttons with qdraw_instance
         self.dlg.dRectangleButton.clicked.connect(self.qdraw_instance.drawRect)
@@ -238,6 +238,7 @@ class drawshape(QObject):
 
         # Set the selection behavior to select entire rows
         self.dlg.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.handle_refresh_click()
 
     def create_drawings_group(self):
 
@@ -278,20 +279,6 @@ class drawshape(QObject):
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
             pass
-
-
-    def setup_drwaing_tools(self,resNumber):
-
-        qdraw_instance = Qdraw(self.iface, resNumber, self.output_directory, self.project)
-        self.dlg.dRectangleButton.clicked.connect(qdraw_instance.drawRect)
-        self.dlg.dCircleButton.clicked.connect(qdraw_instance.drawCircle)
-        self.dlg.dPolygonButton.clicked.connect(qdraw_instance.drawPolygon)
-        result = self.dlg.exec_()
-        if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
-            pass
-
 
 
     def handle_refresh_click(self):
