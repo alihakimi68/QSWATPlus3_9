@@ -41,7 +41,9 @@ import os
 
 
 class Qdraw(object):
-    def __init__(self, iface, resNumber,output_directory,project):
+    def __init__(self, iface, resNumber,output_directory,project,drawshape_instance):
+        self.drawshape_instance = drawshape_instance
+
         overrideLocale = QSettings().value("locale/overrideFlag", False, type=bool)
         if not overrideLocale: locale = QLocale.system().name()
         else:
@@ -167,6 +169,7 @@ class Qdraw(object):
         self.drawShape = 'polygon'
         self.toolname = 'drawRect'
         self.resetSB()
+
 
 
 
@@ -429,3 +432,4 @@ then select an entity on the map.'
         self.tool.reset()
         self.resetSB()
         self.bGeom = None
+        self.drawshape_instance.handle_refresh_click()
