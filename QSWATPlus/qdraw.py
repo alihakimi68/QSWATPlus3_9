@@ -79,6 +79,9 @@ class Qdraw(object):
         self.output_directory = output_directory
         self.project = project
 
+    def updateResNumber(self, resNumber):
+        self.resNumber = resNumber
+
     def unload(self):
         for action in self.actions:
             self.iface.removePluginVectorMenu('&Qdraw', action)
@@ -328,6 +331,8 @@ then select an entity on the map.'
         if isinstance(self.tool, DrawPolygon):
             self.draw()
 
+
+
     def draw(self):
         rb = self.tool.rb
         g = rb.asGeometry()
@@ -370,7 +375,7 @@ then select an entity on the map.'
 
             area = feature.geometry().area()  # Calculate the area using QgsGeometry.area()
             centroid = feature.geometry().centroid().asPoint()
-
+            # self.iface.messageBar().pushMessage("Error", str(self.resNumber), level=2, duration=5)
             attrs = [name,1,self.resNumber,area,centroid.x(),centroid.y(),0]
 
             feature.setAttributes(attrs)
