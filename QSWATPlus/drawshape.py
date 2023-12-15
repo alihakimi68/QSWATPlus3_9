@@ -92,6 +92,9 @@ class drawshape(QObject):
         self.output_directory = self.project.homePath() + '/drshapes/'
         self.icon_folder = 'resources'
 
+        # self.resNumber = 1
+
+
     # def dock_to_right(self):
     #
     #
@@ -216,20 +219,21 @@ class drawshape(QObject):
         """Run method that performs all the real work"""
 
         # show the dialog
+        # show the dialog
         self.dlg.show()
 
-        # self.create_drawings_group()
+        # Connect the method to handle the category change event
+        self.dlg.comboBox_selectcategory.currentIndexChanged.connect(self.handle_button_click)
 
-        self.dlg.cShapeButton.setCheckable(True)
+        # Create Qdraw instance
+        self.qdraw_instance = Qdraw(self.iface, 1, self.output_directory, self.project)
 
-        self.dlg.groupBox_selectcategory.setEnabled(True)
-
-        self.dlg.groupBox_drawpolygon.setEnabled(False)
-
-        self.dlg.cShapeButton.clicked.connect(self.handle_button_click)
+        # Connect the draw methods to the buttons with qdraw_instance
+        self.dlg.dRectangleButton.clicked.connect(self.qdraw_instance.drawRect)
+        self.dlg.dCircleButton.clicked.connect(self.qdraw_instance.drawCircle)
+        self.dlg.dPolygonButton.clicked.connect(self.qdraw_instance.drawPolygon)
 
         self.dlg.toolButton_Refresh.clicked.connect(self.handle_refresh_click)
-
         self.dlg.toolButton_load.clicked.connect(self.handle_loadshape_click)
 
         # Set the selection behavior to select entire rows
@@ -266,31 +270,27 @@ class drawshape(QObject):
             self.dlg.Labletest.setText(text)
             resNumber = 4
 
-        if self.dlg.cShapeButton.isChecked():
+            # Update resNumber in Qdraw instance
+        self.qdraw_instance.updateResNumber(resNumber)
 
-            self.dlg.groupBox_selectcategory.setEnabled(False)
-            self.dlg.groupBox_drawpolygon.setEnabled(True)
-            self.dlg.cShapeButton.setText('Select Category / Draw : Draw')
+        result = self.dlg.exec_()
+        if result:
+            # Do something useful here - delete the line containing pass and
+            # substitute with your code.
+            pass
 
-            # self.iface.messageBar().pushMessage("Error", str(resNumber), level=2, duration=5)
-            qdraw_instance = Qdraw(self.iface, resNumber,self.output_directory,self.project)
-            self.dlg.dRectangleButton.clicked.connect(qdraw_instance.drawRect)
-            self.dlg.dCircleButton.clicked.connect(qdraw_instance.drawCircle)
-            self.dlg.dPolygonButton.clicked.connect(qdraw_instance.drawPolygon)
 
-            result = self.dlg.exec_()
-            if result:
-                # Do something useful here - delete the line containing pass and
-                # substitute with your code.
-                pass
+    def setup_drwaing_tools(self,resNumber):
 
-        elif not self.dlg.cShapeButton.isChecked():
-            self.dlg.groupBox_selectcategory.setEnabled(True)
-            self.dlg.groupBox_drawpolygon.setEnabled(False)
-            self.dlg.cShapeButton.setText('Select Category / Draw : Select Catergory')
-            # self.iface.messageBar().pushMessage("Error", 'not checked', level=2, duration=5)
-        else:
-            self.iface.messageBar().pushMessage("Error", 'This is not right', level=2, duration=5)
+        qdraw_instance = Qdraw(self.iface, resNumber, self.output_directory, self.project)
+        self.dlg.dRectangleButton.clicked.connect(qdraw_instance.drawRect)
+        self.dlg.dCircleButton.clicked.connect(qdraw_instance.drawCircle)
+        self.dlg.dPolygonButton.clicked.connect(qdraw_instance.drawPolygon)
+        result = self.dlg.exec_()
+        if result:
+            # Do something useful here - delete the line containing pass and
+            # substitute with your code.
+            pass
 
 
 
