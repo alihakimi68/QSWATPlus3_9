@@ -31,9 +31,10 @@ from qgis.PyQt.QtCore import QObject, Qt, QSettings, QTranslator, QCoreApplicati
 from qgis.PyQt.QtGui import QIcon, QStandardItem, QColor
 from qgis.PyQt.QtWidgets import QAction, QMessageBox, QTableWidgetItem, QAbstractItemView,\
                                 QAbstractButton, QTableWidget, QStyledItemDelegate,\
-                                QPushButton, QMessageBox, QFileDialog
+                                QPushButton, QMessageBox, QFileDialog, QCheckBox, QWidget, QVBoxLayout
 
-from qgis.core import QgsProject, QgsGeometry, QgsVectorLayer, QgsWkbTypes, QgsFillSymbol, QgsLayerTreeGroup
+from qgis.core import (QgsProject, QgsGeometry, QgsVectorLayer, QgsWkbTypes,\
+                       QgsFillSymbol, QgsLayerTreeGroup , QgsVectorFileWriter)
 
 from qgis.gui import QgsMapToolEdit, QgsMapToolPan
 
@@ -235,6 +236,7 @@ class drawshape(QObject):
 
         self.dlg.toolButton_Refresh.clicked.connect(self.handle_refresh_click)
         self.dlg.toolButton_load.clicked.connect(self.handle_loadshape_click)
+        self.dlg.toolButton_Merge.clicked.connect(self.handle_merge_click)
 
         # Set the selection behavior to select entire rows
         self.dlg.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -376,6 +378,17 @@ class drawshape(QObject):
                             move_link.setStyleSheet("QPushButton { color: blue; text-decoration: underline; }")
                             self.dlg.tableWidget.setCellWidget(self.dlg.tableWidget.rowCount() - 1, 5, move_link)
 
+                            checkbox = QCheckBox()
+                            checkbox.stateChanged.connect(partial(self.handle_checkbox_state_changed))
+                            checkbox_widget = QWidget()
+                            checkbox_layout = QVBoxLayout(checkbox_widget)
+                            checkbox_layout.setAlignment(Qt.AlignCenter)
+                            checkbox_layout.addWidget(checkbox)
+                            checkbox_widget.setLayout(checkbox_layout)
+                            self.dlg.tableWidget.setCellWidget(self.dlg.tableWidget.rowCount() - 1, 6, checkbox_widget)
+
+
+
                     # Commit the changes to the layer's attribute table
                     layer.commitChanges(stopEditing=True)
                     # self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
@@ -387,6 +400,63 @@ class drawshape(QObject):
         else:
             self.iface.messageBar().pushMessage("Error", 'There is no Drawings group in the tree view', level=2,
                                                 duration=5)
+        self.dlg.tableWidget.itemClicked.connect(self.handle_row_clicked)
+
+    def handle_merge_click(self):
+        selected_rows = self.get_selected_rows_with_checkbox()
+
+        if selected_rows:
+            # Retrieve the first column values of the selected rows
+            first_column_values = [self.dlg.tableWidget.item(row, 0).text() for row in selected_rows]
+
+            # Do something with the first_column_values, for example, print them
+
+            self.iface.messageBar().pushMessage("Error", f'{first_column_values} is selected' , level=2,
+                                                duration=5)
+
+        else:
+            # No rows selected
+            self.iface.messageBar().pushMessage("Error", 'No column is selected', level=2,
+                                                duration=5)
+
+    def get_selected_rows_with_checkbox(self):
+        selected_rows = []
+        for row in range(self.dlg.tableWidget.rowCount()):
+            checkbox_item = self.dlg.tableWidget.cellWidget(row, 6)
+            checkbox = checkbox_item.findChild(QCheckBox)
+            if checkbox and checkbox.isChecked():
+                selected_rows.append(row)
+        return selected_rows
+
+    def handle_checkbox_state_changed(self, state):
+        selected_row = self.get_selected_row()
+
+        if state == Qt.Checked:
+            if selected_row != -1:
+                # Checkbox is checked, select the entire row
+                self.dlg.tableWidget.selectRow(selected_row)
+        else:
+            # Checkbox is unchecked, deselect the entire row
+            self.dlg.tableWidget.clearSelection()
+
+
+
+    def handle_row_clicked(self, item):
+        # Handle row selection when clicking anywhere on the row
+        row = item.row()
+        self.dlg.tableWidget.selectRow(row)
+        checkbox_item = self.dlg.tableWidget.cellWidget(row, 6)
+        checkbox = checkbox_item.findChild(QCheckBox)
+        if checkbox:
+            # Toggle the checkbox state
+            checkbox.setChecked(not checkbox.isChecked())
+
+    def get_selected_row(self):
+        selected_items = self.dlg.tableWidget.selectedItems()
+        if selected_items:
+            return selected_items[0].row()
+        else:
+            return -1  # No row selected
 
     def generate_random_color(self):
         return QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
@@ -458,18 +528,6 @@ class drawshape(QObject):
                                                                 'Only polygon shapefile is allowed to import',
                                                                 level=2, duration=5)
         self.handle_refresh_click()
-
-
-    def get_selected_row(self):
-        selected_items = self.dlg.tableWidget.selectedItems()
-
-        if selected_items:
-            # Assuming that all selected items belong to the same row
-            first_selected_item = selected_items[0]
-            selected_row = first_selected_item.row()
-            return selected_row
-        else:
-            return -1  # No row selected
 
 
 class DeleteTableWidget(QTableWidget):
