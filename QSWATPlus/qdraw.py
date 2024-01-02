@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from __future__ import print_function
 from __future__ import absolute_import
 from builtins import str
@@ -379,7 +380,9 @@ then select an entity on the map.'
             area = feature.geometry().area()  # Calculate the area using QgsGeometry.area()
             centroid = feature.geometry().centroid().asPoint()
             # self.iface.messageBar().pushMessage("Error", str(self.resNumber), level=2, duration=5)
-            attrs = [name,1,self.resNumber,area,centroid.x(),centroid.y(),0]
+            unique_id = int(area + centroid.x())
+
+            attrs = [name,unique_id,self.resNumber,area,centroid.x(),centroid.y(),0]
 
             feature.setAttributes(attrs)
             layer.dataProvider().addFeatures([feature])
