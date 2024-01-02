@@ -50,7 +50,7 @@ class Ui_drawshapedialog(object):
         self.tableWidget = QtWidgets.QTableWidget(self.groupBox_status)
         self.tableWidget.setGeometry(QtCore.QRect(20, 30, 351, 250))
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(6)
+        self.tableWidget.setColumnCount(7)
         self.tableWidget.setRowCount(1)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(0, item)
@@ -72,6 +72,9 @@ class Ui_drawshapedialog(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(5, item)
         self.tableWidget.setColumnWidth(5, 15)
+        self.tableWidget.setHorizontalHeaderItem(6, item)
+        self.tableWidget.setColumnWidth(6, 15)
+
 
         self.toolButton_Merge = QtWidgets.QPushButton(self.groupBox_status)
         self.toolButton_Merge.setGeometry(QtCore.QRect(40, 290, 90, 21))
@@ -133,6 +136,8 @@ class Ui_drawshapedialog(object):
         item.setText(_translate("drawshapedialog", "EDT"))
         item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("drawshapedialog", "MOV"))
+        item = self.tableWidget.horizontalHeaderItem(6)
+        item.setText(_translate("drawshapedialog", "SEL"))
         self.toolButton_Merge.setText(_translate("drawshapedialog", "Merge"))
         self.toolButton_load.setText(_translate("drawshapedialog", "Load Shape"))
         self.toolButton_Refresh.setText(_translate("drawshapedialog", "Refresh"))
