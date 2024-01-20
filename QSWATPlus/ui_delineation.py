@@ -641,7 +641,34 @@ class Ui_DelineationDialog(object):
         self.gridLayout_7.addWidget(self.mergeButton, 0, 2, 1, 1)
         self.gridLayout_16.addWidget(self.mergeGroup, 0, 0, 1, 1)
         self.tabWidget_2.addTab(self.mergeTab, "")
-        
+
+        # draw shape componennts copied from landscapeTab and changed to DrawShape #002#
+        # landscape replaced with Drawshape
+        # gridLayout_15 changed with gridLayout_18
+        # spacerItem3 change to spacerItem5
+        # gridLayout_2 change to gridLayout_19
+        self.DrawShape = QtWidgets.QWidget()
+        self.DrawShape.setObjectName("DrawShape")
+        self.gridLayout_18 = QtWidgets.QGridLayout(self.DrawShape)
+        self.gridLayout_18.setObjectName("gridLayout_18")
+        self.DrawShapeGroup = QtWidgets.QGroupBox(self.DrawShape)
+        self.DrawShapeGroup.setObjectName("DrawShapeGroup")
+        self.gridLayout_19 = QtWidgets.QGridLayout(self.DrawShapeGroup)
+        self.gridLayout_19.setObjectName("gridLayout_19")
+        spacerItem5 = QtWidgets.QSpacerItem(518, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_19.addItem(spacerItem5, 0, 0, 1, 1)
+        self.DrawShapeButton = QtWidgets.QPushButton(self.DrawShapeGroup)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.DrawShapeButton.sizePolicy().hasHeightForWidth())
+        self.DrawShapeButton.setSizePolicy(sizePolicy)
+        self.DrawShapeButton.setMinimumSize(QtCore.QSize(0, 0))
+        self.DrawShapeButton.setObjectName("DrawShapeButton")
+        self.gridLayout_19.addWidget(self.DrawShapeButton, 0, 1, 1, 1)
+        self.gridLayout_18.addWidget(self.DrawShapeGroup, 0, 0, 1, 1)
+        self.tabWidget_2.addTab(self.DrawShape, "")
+        # draw shape componennts copied from landscapeTab and changed to DrawShape #002#
         
         # add lake tab
         self.lakesTab = QtWidgets.QWidget()
@@ -689,33 +716,7 @@ class Ui_DelineationDialog(object):
         self.gridLayout_14.addWidget(self.tabWidget_2, 2, 0, 1, 5)
         
         
-        # draw shape componennts copied from landscapeTab and changed to DrawShape #002#
-        # landscape replaced with Drawshape
-        # gridLayout_15 changed with gridLayout_18
-        # spacerItem3 change to spacerItem5
-        # gridLayout_2 change to gridLayout_19
-        self.DrawShape = QtWidgets.QWidget()
-        self.DrawShape.setObjectName("DrawShape")
-        self.gridLayout_18 = QtWidgets.QGridLayout(self.DrawShape)
-        self.gridLayout_18.setObjectName("gridLayout_18")
-        self.DrawShapeGroup = QtWidgets.QGroupBox(self.DrawShape)
-        self.DrawShapeGroup.setObjectName("DrawShapeGroup")
-        self.gridLayout_19 = QtWidgets.QGridLayout(self.DrawShapeGroup)
-        self.gridLayout_19.setObjectName("gridLayout_19")
-        spacerItem5 = QtWidgets.QSpacerItem(518, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_19.addItem(spacerItem5, 0, 0, 1, 1)
-        self.DrawShapeButton = QtWidgets.QPushButton(self.DrawShapeGroup)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.DrawShapeButton.sizePolicy().hasHeightForWidth())
-        self.DrawShapeButton.setSizePolicy(sizePolicy)
-        self.DrawShapeButton.setMinimumSize(QtCore.QSize(0, 0))
-        self.DrawShapeButton.setObjectName("DrawShapeButton")
-        self.gridLayout_19.addWidget(self.DrawShapeButton, 0, 1, 1, 1)
-        self.gridLayout_18.addWidget(self.DrawShapeGroup, 0, 0, 1, 1)
-        self.tabWidget_2.addTab(self.DrawShape, "")
-        # draw shape componennts copied from landscapeTab and changed to DrawShape #002#
+
         
         
 
@@ -835,6 +836,15 @@ class Ui_DelineationDialog(object):
         self.mergeButton.setToolTip(_translate("DelineationDialog", "Perform the merge."))
         self.mergeButton.setText(_translate("DelineationDialog", "Merge"))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.mergeTab), _translate("DelineationDialog", "Merge subbasins"))
+
+        # draw shape componennts copied from landscapeTab and changed to DrawShape #004#
+        self.DrawShapeGroup.setTitle(_translate("DelineationDialog", "Draw Polygon"))
+        self.DrawShapeButton.setToolTip(_translate("DelineationDialog", "DrawShape"))
+        self.DrawShapeButton.setText(_translate("DelineationDialog", "Draw"))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.DrawShape),
+                                    _translate("DelineationDialog", "Draw Polygon"))
+        # draw shape componennts copied from landscapeTab and changed to DrawShape #004#
+
         self.lakesGroup.setTitle(_translate("DelineationDialog", "Add lakes shapefile"))
         self.selectLakesButton.setToolTip(_translate("DelineationDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -849,12 +859,7 @@ class Ui_DelineationDialog(object):
         self.lakeMessagesBox.setText(_translate("DelineationDialog", "Don\'t display lake messages"))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.lakesTab), _translate("DelineationDialog", "Add Lakes"))
         
-        # draw shape componennts copied from landscapeTab and changed to DrawShape #004#
-        self.DrawShapeGroup.setTitle(_translate("DelineationDialog", "Draw Polygon"))
-        self.DrawShapeButton.setToolTip(_translate("DelineationDialog", "DrawShape"))
-        self.DrawShapeButton.setText(_translate("DelineationDialog", "Draw"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.DrawShape), _translate("DelineationDialog", "Draw Polygon"))
-        # draw shape componennts copied from landscapeTab and changed to DrawShape #004#
+
         
 from . import resources_rc
 
