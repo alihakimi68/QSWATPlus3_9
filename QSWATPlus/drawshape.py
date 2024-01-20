@@ -37,6 +37,8 @@ from qgis.core import QgsProject, QgsWkbTypes, QgsVectorFileWriter, \
     QgsFillSymbol, QgsLayerTreeGroup, QgsVectorLayer, \
     QgsFields, QgsFeature, QgsGeometry, QgsField, QgsCoordinateReferenceSystem, QgsApplication
 
+from qgis.PyQt.QtWidgets import QInputDialog
+
 
 from qgis.gui import QgsMapToolEdit, QgsMapToolPan
 
@@ -68,6 +70,11 @@ class drawshape(QObject):
         # self.crsProject = crsProject
         self.dlg = drawshapedialog()
         self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
+
+        # Set the default position
+        default_x = 100  # replace with your desired x-coordinate
+        default_y = 100  # replace with your desired y-coordinate
+        self.dlg.move(default_x, default_y)
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
@@ -421,56 +428,67 @@ class drawshape(QObject):
     def handle_merge_click(self):
         selected_rows = self.get_selected_rows_with_checkbox()
 
-        if selected_rows:
+        if selected_rows and len(selected_rows) > 1:
             # Retrieve the first column values of the selected rows
             first_column_values = [self.dlg.tableWidget.item(row, 0).text() for row in selected_rows]
 
             # Get the directory where the merged file will be saved
 
-            merge_file_path = self.output_directory + 'Merge.shp'
+            # Prompt the user for a name for the merged layer
+            merged_layer_name, ok = QInputDialog.getText(self.dlg, 'Input Dialog', 'Enter a name for the merged layer:')
 
-            # Create a list to store the selected QgsVectorLayer objects
-            selected_layers = []
+            if ok and merged_layer_name:
 
-            # Iterate through selected rows and get the QgsVectorLayer objects
-            for row in selected_rows:
-                layer_name = self.dlg.tableWidget.item(row, 0).text()
-                layer = QgsProject.instance().mapLayersByName(layer_name)
-                if layer:
-                    selected_layers.append(layer[0])
+                merge_file_path = self.output_directory + merged_layer_name + '.shp'
+                # Check if the file already exists
+                while os.path.exists(merge_file_path):
+                    merged_layer_name, ok = QInputDialog.getText(self.dlg, 'Input Dialog',
+                                                                 'Enter a non-existing name for the merged layer:')
+                    if ok and merged_layer_name:
+                        merge_file_path = self.output_directory + merged_layer_name + '.shp'
+                    else:
+                        # Handle the case when the user cancels the input dialog or provides an empty name
+                        break
 
-            # Merge the selected layers
-            self.merge_shapefiles(selected_layers, merge_file_path)
+                if ok and merged_layer_name:
 
-            # Show a message indicating the merge is successful
-            self.iface.messageBar().pushMessage("Success", 'Selected shapefiles are merged and saved as Merge.shp', level=0,
+
+                    # Create a list to store the selected QgsVectorLayer objects
+                    selected_layers = []
+
+                    # Iterate through selected rows and get the QgsVectorLayer objects
+                    for row in selected_rows:
+                        layer_name = self.dlg.tableWidget.item(row, 0).text()
+                        layer = QgsProject.instance().mapLayersByName(layer_name)
+                        if layer:
+                            selected_layers.append(layer[0])
+
+                    # Merge the selected layers
+                    self.merge_shapefiles(selected_layers, merge_file_path,merged_layer_name)
+
+                    # Show a message indicating the merge is successful
+                    self.iface.messageBar().pushMessage("Success", f'Selected shapefiles are merged and saved as {merged_layer_name}.shp', level=0,
+                                                        duration=5)
+
+                else:
+                    # Handle the case when the user cancels the input dialog or provides an empty name
+                    self.iface.messageBar().pushMessage("Error", 'Invalid name for the merged layer', level=2,
+                                                        duration=5)
+        elif len(selected_rows) == 1:
+            # Only one row selected
+            self.iface.messageBar().pushMessage("Error", 'Select more than one row for merging', level=2,
                                                 duration=5)
+
         else:
             # No rows selected
-            self.iface.messageBar().pushMessage("Error", 'No column is selected', level=2,
+            self.iface.messageBar().pushMessage("Error", 'No row is selected', level=2,
                                                 duration=5)
 
-    def deleteShapefile(self, aDir, aFile):
-        fnameNoExt = os.path.splitext(aFile)[0]
 
-        extensions = ["shp", "shx", "dbf", "prj", "sbn", "sbx", "fbn", "fbx", "ain", "aih", "ixs", "mxs", "atx", "xml",
-                      "cpg", "qix"]
+    def merge_shapefiles(self, layers, output_path,merged_layer_name):
 
-        theFiles = [f for f in os.listdir(aDir) if
-                    os.path.isfile(os.path.join(aDir, f))]  # get a list of all files in that directory
-
-        for f in theFiles:
-            theFile = os.path.basename(f)
-            name, extension = os.path.splitext(theFile)
-            # If the name matches the input file and the extension is in that list, delete it:
-            if (name == fnameNoExt or name == fnameNoExt + ".shp") and (
-                    extension in extensions):  # handles the foo.shp.xml case too.
-                os.remove(os.path.join(aDir, f))
-
-    def merge_shapefiles(self, layers, output_path):
         # Create a new vector layer for the merged result
         crs = layers[0].crs()
-        merged_layer = QgsVectorLayer("Polygon?crs=" + crs.authid(), "Merge", "memory")
 
         # Create fields for the merged layer
         merged_layer_fields = QgsFields()
@@ -478,6 +496,9 @@ class drawshape(QObject):
         for layer in layers:
             for field in layer.fields():
                 merged_layer_fields.append(QgsField(field))
+
+
+        merged_layer = QgsVectorLayer("Polygon?crs=" + crs.authid(), merged_layer_name, "memory")
 
         merged_layer.dataProvider().addAttributes(merged_layer_fields)
         merged_layer.updateFields()
@@ -493,34 +514,14 @@ class drawshape(QObject):
         # Commit the changes to the merged layer
         merged_layer.commitChanges(stopEditing=True)
 
-        # Remove the existing file
-        if os.path.exists(output_path):
-            # Close and remove the QgsVectorLayer associated with the file
-            layers_to_remove = QgsProject.instance().mapLayersByName("Merge")
-            if layers_to_remove:
-                QgsProject.instance().removeMapLayer(layers_to_remove[0].id())
-                self.iface.mapCanvas().refresh()
-
-                # Ensure that any ongoing rendering or processing is completed
-                while QgsProject.instance().mapLayersByName("Merge"):
-                    QApplication.processEvents()
-
-                time.sleep(1)
-
-                # Delete associated files using the deleteShapefile function
-                self.deleteShapefile(os.path.dirname(output_path), os.path.basename(output_path))
-
         # Save the merged layer to the specified output path
         QgsVectorFileWriter.writeAsVectorFormat(merged_layer, output_path, 'UTF-8', crs, 'ESRI Shapefile')
 
         # Load the merged layer to the map canvas
-        merged_layer = QgsVectorLayer(output_path, "Merge", "ogr")
+        merged_layer = QgsVectorLayer(output_path, merged_layer_name, "ogr")
 
         # Refresh the map canvas
         QgsProject.instance().addMapLayer(merged_layer, False)
-        self.iface.layerTreeView().refreshLayerSymbology(merged_layer.id())
-        self.iface.setActiveLayer(merged_layer)
-        self.iface.mapCanvas().refresh()
 
         # Optional: Remove individual layers from the layer tree
         drawings_group, _ = self.create_drawings_group()
@@ -532,6 +533,8 @@ class drawshape(QObject):
         group, _ = self.create_merge_group()
         group.insertLayer(0, merged_layer)
         self.iface.layerTreeView().refreshLayerSymbology(merged_layer.id())
+        self.iface.setActiveLayer(merged_layer)
+        self.iface.mapCanvas().refresh()
 
         self.iface.messageBar().pushMessage("Success", 'Selected shapefiles are merged and saved as Merge.shp', level=0,
                                             duration=5)
