@@ -72,6 +72,7 @@ class Ui_drawshapedialog(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(5, item)
         self.tableWidget.setColumnWidth(5, 15)
+        item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(6, item)
         self.tableWidget.setColumnWidth(6, 15)
 
