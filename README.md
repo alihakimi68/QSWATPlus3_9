@@ -29,7 +29,7 @@ Follow these steps to install QSWATPlus3_9:
 
 ## Preview
 
-Watch the video tutorial on [YouTube](https://github.com/alihakimi68/QSWATPlus3_9/blob/70d488c9318b6995cb5027ad0db7a36e07d9515e/Preview.mp4).
+Watch the video tutorial on [Download](https://github.com/alihakimi68/QSWATPlus3_9/blob/70d488c9318b6995cb5027ad0db7a36e07d9515e/Preview.mp4).
 
 
 
